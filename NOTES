@@ -1,0 +1,12 @@
+file machine.ml, line 515 - method make_simulated_device
+	Method of class machine that generates a new "machine" object.
+	This object represents some UML, and is created by "new Simulation_level.machine".
+	Parameters are passed to the constructor.
+
+file simulation_level.ml, line 1515 - initializer
+	Initializer of class machine_or_router, parent of machine and router classes.
+	Parameters are somehow applied and the new process is created.
+	The new process is stored in "uml_process".
+
+file simulation_level.ml, line 811 - class uml_process
+This class represents a uml process and its constructor is used to launch one such process.

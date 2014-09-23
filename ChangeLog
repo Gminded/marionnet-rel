@@ -1,0 +1,1793 @@
+2011-02-02  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Backported changes from trunk; bumped version number
+
+2011-02-02  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	In marionnet_from_scratch: aptitude may be launched now with --allow-untrusted; also bug fixed in the command testing if a deb package is installed.
+
+2011-02-02  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Added the character dot '.' into the list of admissible characters for directory names.
+
+2011-02-02  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Bug fixed in x.ml: the DISPLAY environment variable is now correctly read when it contains a value in the form x.y.z.t:v (for instance 172.23.0.254:0 or 127.0.0.1:0).
+
+2011-01-28  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Bug fixes and updates in marionnet_from_scratch.
+
+2011-01-28  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Backported changes from trunk; bumped version number
+
+2011-01-28  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	marionnet_from_scratch specialized for debian or derived distributions.
+
+2011-01-28  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Bug fixed: localeprefix in CONFIGME is now really used by the gettext handler.
+
+2011-01-24  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	More intelligible implementation of sudo/not-sudo switching in marionnet_from_scratch.
+
+2011-01-24  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Added the module Configuration, included by Initialization and Marionnet-daemon.
+
+2010-12-08  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Updated marionnet_from_scratch's script version number: now is 0.92.
+
+2010-12-08  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Bug fixed in marionnet_from_scratch: when root privilege are not needed, the marionnet-related 'make install' (line 787) is now not called under sudo.
+
+2010-12-07  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Three features added to marionnet_from_scratch: sysV-style init, adjust X -nolisten tcp, adjust PATH.
+
+2010-12-03  Luca Saiu  <positron@gnu.org>
+
+	Backported bugfixes from trunk; bumped version number
+
+2010-12-03  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Bug fixed: now connected cables are correctly destroyed when a device is removed from the network.
+
+2010-12-03  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Fixed last changes (commit 319).
+
+2010-12-03  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Added the file "$PREFIX/share/marionnet/marionnet.conf" to the list of files read during initialization. It will be read with the lowest priority.
+
+2010-12-03  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Minor change in marionnet_from_scratch: removed useless lines using awk (with a potential compatibility problem between awk implementations (mawk vs gawk)).
+
+2010-12-01  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Improved marionnet_from_scratch: now the working progress percent is displayed also file downloading (kernels and filesystems).
+	On the other hand, I added to the repository the script marionnet_from_scratch_weights_of_log that allows to re-calculate weights.
+
+2010-12-01  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Improved marionnet_from_scratch: the script calls now 'su' to become the super user when 'sudo' is not available.
+
+2010-12-01  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Minor change in marionnet_from_scratch.
+
+2010-12-01  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Added script marionnet_from_scratch.
+
+2010-11-23  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	FIxed some anomalies in Makefile.
+
+2010-11-19  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Improved the make_marionnet_bytecode_revno's command line parsing.
+
+2010-11-23  Luca Saiu  <positron@gnu.org>
+
+	Bumped version number: we are about to release 0.90.2
+
+2010-11-23  Luca Saiu  <positron@gnu.org>
+
+	Synced Makefile and friends from trunk
+
+2010-11-22  Luca Saiu  <positron@gnu.org>
+
+	Bumped revision number for release 0.90.1, fixing a little but embarrassing bug
+
+2010-11-18  Luca Saiu  <positron@gnu.org>
+
+	Bumped version number: we are releasing now.
+
+2010-11-18  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Updated META.
+
+2010-11-17  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Changed the format of version shown in the splash screen: now in the case of a *released* version, the provided information is just like "Version 0.90.0 - 2010-11-17", otherwise is like "Version trunk revno 309 - 2010-11-17 11:50:45 +0001". By convention, let a "released version" be a version that matches the pattern X.Y.Z where X, Y and Z are numbers; by contrast all the other  versions will be "unreleased versions"  (for instance "trunk" or "reactive" or "0.90.X").
+
+2010-11-17  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Updated copyright notices (step 2: removed trivial contributions).
+
+2010-11-15  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Merged.
+
+2010-11-15  Luca Saiu  <positron@gnu.org>
+
+	Merged
+
+2010-11-15  Luca Saiu  <positron@gnu.org>
+
+	Updated copyright years in Makefile and friends
+
+2010-11-15  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Updated copyright notices.
+
+2010-11-15  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Minor change, removed warnings.
+
+2010-11-14  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Added the IUTV and LIPN logos in the splash window and updated the about dialog.
+
+2010-11-11  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Bug fixed: it is now possible to rename or remove a device that has been started once. The code in treeview have been changed in order to avoid similar problems (for treeviews, as treeview_history, with a not unique column "Name").
+
+2010-11-09  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Grouped the world gateway and the world bridge image buttons under a new image button, the "Real world access".
+
+2010-11-08  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Added German translation (thank you spaceflower).
+
+2010-11-05  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Updated .po files (some new keys have been introduced by the refactoring).
+
+2010-11-05  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Moved the marionnet-daemon starting script into useful-scripts/etc_init.d_marionnet-daemon.
+
+2010-11-05  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Extended the network image export feature: now the user could export in all possible dot output formats (i.e.  canon, dia, dot, xdot, cmap, eps, fig, gd, gd2, gif, gtk, hpgl, ico, imap, cmapx, imap_np, cmapx_np, ismap, jpg, pdf, plain, plain_ext, png, ps, ps2, svg, svgz, tiff, vml, vmlz, vrml, wbmp).
+
+2010-11-04  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Finishing the major refactoring started at revision 282: "mariokit" renamed as "user_level" and "simulated_network" renamed as "simulation_level".
+
+2010-11-04  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Cable's code refactored.
+
+2010-10-28  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Refactored all code related to project directories and filenames (defined in state.ml). This part of code is now essentially reactive.
+
+2010-10-28  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Added wire class Chip.wlist, a polymorphic container implemented as a mutable list.
+
+2010-10-27  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Major changes: all treeview related code renamed, revised and lightly simplified (~300 lines smaller summing 5 files).
+
+2010-10-25  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Integrated ocamlbricks' support for tracing raise calls.
+
+2010-10-24  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Added a very basic version of the /etc/init.d/ script launching the marionnet daemon.
+
+2010-10-24  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Added forgotten files.
+
+2010-10-24  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Machine's code refactored.
+
+2010-10-24  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Added method Gui_bricks.form#add_section and applied in router.ml for building more aesthetically pleasing dialog forms.
+
+2010-10-21  Jean-Vincent Loddo  <jean@laptop>
+
+	Cloud's code refactored.
+
+2010-10-20  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	World bridge's code refactored.
+
+2010-10-20  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Major code changes for a limited user change: now switches and hubs have a 1-based port numbering. This avoid confusion when a switch is configured by the vde terminal. 
+	Warning: this is a temporary revision: machines, world bridges and clouds must be rewritten with the new code structure in order to be ready for use.
+
+2010-10-14  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Major changes of the switch component: now the user can access the VDE terminal for configuring VLANs, fstp, etc. 
+	In this revision, however, still remains a mismatch between our port numbering (starting from 0) and the VDE port numbering (starting from 1) that potentially could get students (and teachers) confused.
+
+2010-10-05  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Switch's code refactored.
+
+2010-10-01  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Major changes: hub's code refactored in the same way of routers and world gateways. Now there is a *strict* relationship between user actions and component methods:
+	- user add -> new object
+	- user properties -> object#update
+	- user remove -> object#destroy
+	This revision is not widely tested (I will test the refactoring when it will be completed).
+
+2010-09-28  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	More user-friendly add/update dialogs (currently just for world gateways and routers): when the name is ill-formed a dialog informing the user is shown now.
+
+2010-09-28  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	World gateway's code refactored in the same way of the router. The single file world_gateway.ml contains now all world gateway related code (gui + user-level + simulation-level).
+
+2010-09-28  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Router's code refactoring: all router related code (gui + user-level + simulation-level) is now centralized in the single file "router.ml". This reorganization is a model for a complete refactoring of the project.
+
+2010-09-27  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Added the world gateway help dialog.
+
+2010-09-27  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Minor changes in router and world-gateway tooltips.
+	Added file COPYING.BSD in the repository (for translations).
+
+2010-09-27  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Removed "implicit" include directives (as "-I +ocamlbricks") from the Makefile. The "explicit" ones (as "-I + /usr/lib/ocaml/ocamlbricks") are sufficient and do not perturb the compilation with a local (not installed) ocaml system.
+
+2010-09-25  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Just a *.po update
+
+2010-09-25  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	New user-level router implementation. Now the user can choose the filesystem, the variant, the kernel, and he can choose to open a unix terminal when the router is launched.
+	
+	Changes are backward compatible: old projects may be correctly interpreted by the new implementation (no treeview changes, as temporary done in some previous bzr revisions (this last week)).
+	
+	The router related code have been massively refactored. Now the gui part is glade independent and centralized in a unique file (gui/gui_router.ml) as for world gateways. It is also more robust: string environments have been replaced by strongly typed environments.
+
+2010-09-23  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Removed the glade last dependence of Gui_world_gateway.
+	Now is really a good model for the other components.
+
+2010-09-23  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Removed file gui/gui/gui_world_gateway_dialog.ml. We have now a single file (gui/gui_world_gateway.ml) for the gui related code of the "world gateway" component, and the implementation is totally independent from glade.
+	The new code structure uses  the "where" syntax extension defined in ocamlbricks revno 196.
+
+2010-09-21  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Gui world gateway related stuff rewritten using a type-safe structure
+	instead of string environments. The code is now more robust, quite 
+	less cryptic and more concise (2 files instead of 3 for managing all 
+	world-gateways related menus (4 if we consider gui.xml)). 
+	The idea is to re-use the same code structure for routers and,
+	may be, for the other components.
+
+2010-09-21  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Modified "glue" (functors) between menu definitions (gui_machine.ml, 
+	gui_hub.ml,..) and the result of related dialogs, which is now an abstract 
+	data type. This is the first step to replace string environments with 
+	something more type safe.
+
+2010-09-21  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Generalized script marionnet-toplevel for testing specific modules,
+	including modules implementing widgets. Removed the (now meaningless) 
+	script gui/gui_world_gateway_dialog_widget_test.sh.
+	
+	$ marionnet-toplevel --help
+	Usage: marionnet-toplevel [[<path>/]<filename>[.ml]] [OCAML_OPTIONS]                                                                                                                               
+	
+	Launch marionnet in a toplevel or test a specific module.                                                                                                                                          
+	
+	Internally, the script gets (from the ocamlbuild log) the correct                                                                                                                                  
+	command line for compiling marionnet.byte as defined by ocamlbuild,                                                                                                                                
+	then it simply replaces "ocamlc.opt" by "ocamlmktop" and the target                                                                                                                                
+	"marionnet.byte" by the temporary name of the toplevel.                                                                                                                                            
+	
+	If a module pattern (ex: gui_router_dialog_widget) or a module filename                                                                                                                            
+	(ex: gui/gui_router_dialog_widget.ml) is provided as argument, the script                                                                                                                          
+	builds a toplevel that will load just the required modules for this                                                                                                                                
+	argument (it deletes modules cited after the pattern in the command line                                                                                                                           
+	defined by ocamlbuild).  Furthermore, the toplevel will call a function                                                                                                                            
+	called "make", with the actual (), supposed defined in the module. This                                                                                                                            
+	is not a strict requirement: we can also test modules which have not                                                                                                                               
+	this function. In this case, the call to "make" will simply fail,                                                                                                                                  
+	without any undesirable effect.                                                                                                                                                                    
+	
+	Examples:                                                                                                                                                                                          
+	./marionnet-toplevel                                                                                                                                                                       
+	./marionnet-toplevel gui/gui_router_dialog_widget.ml                                                                                                                                       
+	./marionnet-toplevel gui_hub                                                                                                                                                               
+	./marionnet-toplevel splash
+
+2010-09-20  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Added script useful-scripts/make_marionnet_bytecode_revno.
+	Using this script we can easily search for the marionnet/ocamlbricks revision 
+	introducing a bug.
+	
+	$ ./make_marionnet_bytecode_revno -h                                                                                      
+	Usage: make_marionnet_bytecode_revno [--prefix <dir>] [REPOS_OPTIONS] [--ocamlbricks <revno>] [<revno>]                                                                                            
+	where REPOS_OPTIONS may be:                                                                                                                                                                        
+	(--marionnet-repo   | -m)  <path>                                                                                                                                                                
+	(--ocamlbricks-repo | -o)  <path>                                                                                                                                                                
+	
+	Build a marionnet bytecode of a given revision (by default the current).                                                                                                                           
+	The good ocamlbricks revno is calculated from the marionnet one, but you                                                                                                                           
+	can set a particular ocamlbricks revision with the option --ocamlbricks.                                                                                                                           
+	
+	Repositories are get from "lp:marionnet" and "lp:ocamlbricks", but you                                                                                                                             
+	can override this behaviour with options --marionnet-repo (or -m) and                                                                                                                              
+	--ocamlbricks-repo (or -o).                                                                                                                                                                        
+	
+	A working directory prefix may be specified with --prefix (by default /tmp).                                                                                                                       
+	The resulting bytecodes (marionnet and daemon) will be generated in a prefix                                                                                                                       
+	sub-directory created by the script.                                                                                                                                                               
+	
+	Examples:                                                                                                                                                                                          
+	make_marionnet_bytecode_revno 207                                                                                                                                                          
+	make_marionnet_bytecode_revno --prefix /tmp/testing 246                                                                                                                                    
+	make_marionnet_bytecode_revno --ocamlbricks 176 245
+
+2010-09-20  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Added the script which_ocamlbricks. With this tool we can query the repositories 
+	ocamlbricks and marionnet and get a plausibly good ocamlbricks revno for the given 
+	marionnet revno.
+
+2010-09-17  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Bug fixed. The bug was introduced by revno 248. 
+	Changing names from  "*s_no" to "*_no"  (removing "s" for english purists, brilliant idea Jean!),
+	I have also changed by the string identifier "ethernet_interfaces_no" used for launching 
+	machines and routers.
+
+2010-09-16  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	New module disk.ml{,i} with the class virtual_machine_installations. 
+	Forgotten in the last commit.
+
+2010-09-16  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Major changes. First (apparently) stable version exporting variants in the user directory.
+	
+	A variant yyyy of a distribution xxxx will be saved now in:
+	~/.marionnet/filesystems/machine-xxxx_variants/yyyy
+	
+	When a machine is added, marionnet proposes all available variants found
+	in the installation directory (for instance) /usr/local/share/marionnet/filesystems/ 
+	and in the user directory ~/.marionnet/filesystems/ (which is prioritary). 
+	
+	Relevant changes in Mariokit.Netmodel: routers have now their own class "router" 
+	(inheriting from device). Both the classes "router" and "machines" inherit from a 
+	common class "virtual_machine".
+	
+	Not widely tested.
+
+2010-09-10  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Using now more levels of log. Examples:
+	- when loading a project, the print of the complete forest is level 3,
+	- the chip stabilization is level 2 
+	- the rest is level 1.
+	Needs the ocamlbricks revision 188.
+
+2010-09-10  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Using the new ocamlbricks' Log_builder version (revno 187).
+
+2010-09-09  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Moved the debug_mode stuff into Initialization in order to immediately 
+	activate logging, if required by the user. In this way, also the parsing 
+	of configuration variables (that occurs at loading-time) can be monitored.
+
+2010-09-09  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	More robust parsing of the address of port0's router: now
+	the application doesn't crash reading a bad address...
+
+2010-09-09  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Some parts of initialization.ml rewritten using Log.
+	The behaviour has not changed (widely tested).
+
+2010-09-09  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Broken a circular dependency: now Log may be used in Initialization.
+
+2010-09-09  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Changed the application starting message.
+	The message provides now more meta informations 
+	about marionnet and ocamlbricks.
+
+2010-09-08  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Minor code restructuration: moved variant-related functions and methods. 
+	Only machines have now fields and methods about variants, not the other
+	components. The type of the variant field is now [string option], instead of
+	[string], in order to better represent this kind of information: [None] means
+	"no cow state selected" while [Some x] means "selected the cow file x".
+	These changes are backward-compatible: the old (french!) string "aucune" 
+	will be interpreted now as [None].
+
+2010-09-07  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Quite annoying splash window may be closed now pressing any key.
+
+2010-09-07  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Improved quitting: now Marionnet tries to understand if there are no changes since 
+	the last save or open user operation. If there are no changes, it doesn't ask for saving 
+	and exits immediately.
+
+2010-09-07  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Added the script "marionnet-toplevel" useful for debugging.
+	It generates an ocaml top-level equipped by all marionnet stuff using
+	the same command line registered by ocamlbuild in _build/_build/_log.
+	The developer may press F5 at any moment to switch to the top-level 
+	from the main window. He can test the value of current state, then 
+	come back, when he wants, to the window simply typing 
+	GMain.Main.main ();;
+
+2010-09-07  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Added network_details_interface.mli.
+
+2010-09-07  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Changed the MAC address generation. The second part (the last 3 bytes) 
+	of any MAC address is now generated randomly. The first part still remains 
+	"02:04:06". The solution adopted does not change the format of the serialized 
+	date structure. In this way the solution is *backward-compatible* (old projects may 
+	be read by the new version) and *forward-compatible* (new projects may be 
+	read by an old version of marionnet).
+
+2010-09-06  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Bug fixed: the quit procedure still executes the actions concurrently but in the correct order now.
+	This bug was quite pernicious: generally speaking, when the task manager launches a task t0, scheduled 
+	before another task t1, if t0 creates itself some new tasks (with #schedule), they will scheduled after t1. 
+	This behaviour may be desirable or not, it depends... But it is certainly not desirable quitting the application: 
+	actually, the old defined task was calling the method network#reset, and this method was scheduling 
+	a sequence of tasks #destroy. So, these methods were executed too late, after closing the project.
+
+2010-09-03  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Bug fixed: the "saving project" progress bar is now visible when the user closes the
+	project or exits the application. Actually, the actions performed closing a projet or 
+	exiting the application are now execute in a non main-gtk thread via the task runner. 
+	The solution is not simple because of the complexity of combining threads with the 
+	main thread loop of gtk. So, this is an unstable version which needs to be tested again.
+
+2010-09-03  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Prevented the exception ForbiddenTransition raised in a critical section by the method poweroff_right_now 
+	(in mariokit.ml).
+
+2010-09-02  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Compilation messages cleanup (resolved warnings). 
+	Minor cleanups in the code. Some identifiers as "hublets_no" renamed into "hublet_no" to please english purists.
+	The user-level component "cloud" (undefined network) has now polarity Intellingent and has no defects by
+	definition. We plan to modify the input dialog in order to ask the user for this feature.
+	Readded the old Luca's documentation file NETWORK-SIMULATION in doc-src/.
+
+2010-09-02  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Generalized the wrapper for the method "run" of a dialog window and
+	moved from gui/gui_world_gateway_dialog_widget.ml to gui/gui_bricks.ml.
+
+2010-09-02  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Minor improvements for the "world gateway" dialog (enter key as OK).
+
+2010-09-01  Jean-Vincent Loddo  <loddo@lipn.univ-paris13.fr>
+
+	Major changes. Added the "world gateway" user-level component. 
+	Renamed all bridge_socket references to world_bridge.
+	Added simulated_network.mli.
+	Minor cleanups and normalization of method identifiers (camel case elimination).
+	World bridges (ex "gateways") now have polarity "Intelligent" instead of "MDI-X".
+	New module gui/gui_bricks.ml{,i} for easing the transition from glade to manually written gtk code.
+	This module is already used for building the world gateway dialog. 
+	The script gui_world_gateway_dialog_widget_test.sh shows how to test a dialog without recompiling
+	marionnet. It may be generalized.
+
+2010-08-24  Jean-Vincent Loddo  <jean@laptop>
+
+	Added class Simulated_network.real_world_gateway. Some classes have
+	been restructured in this module in order to re-use most of code written
+	for switches and hubs.
+
+2010-08-24  Jean-Vincent Loddo  <jean@laptop>
+
+	Removed functions zip (List.combine) and zip3 (ListExtra.combine3).
+
+2010-08-24  Jean-Vincent Loddo  <jean@laptop>
+
+	Created class process_with_socket in simulated_network.ml. 
+	The class hub_or_switch_process inherits now from this new class. 
+	This change just prepares the work for a slirpvde process class 
+	(which also will use a socket).
+
+2010-08-24  Jean-Vincent Loddo  <jean@laptop>
+
+	Just two comments changed .
+
+2010-08-11  Jean-Vincent Loddo  <jean@laptop>
+
+	Fixed a minor bug related to socket tap creation and insertion in a bridge.
+	Now if the bridge doesn't exist, the tap is immediately removed by the 
+	daemon (tunctl -d).
+
+2010-08-11  Jean-Vincent Loddo  <jean@laptop>
+
+	Renamed all "[Gg]ateway" related identifiers, strings, messages or files 
+	to "[Bb]ridge_socket" or sometimes simply "[Ss]ocket". This change is 
+	intended to avoid confusion (in the code) with the new router-gateway 
+	user component.
+
+2010-08-09  Jean-Vincent Loddo  <jean@laptop>
+
+	Removed module recursive_mutex.ml. 
+	Using now the ocamlbricks version MutexExtra.Recursive.
+
+2010-08-09  Jean-Vincent Loddo  <jean@laptop>
+
+	Preprocessors include_as_string_p4.ml an include_type_definitions_p4.ml removed from marionnet.
+	The ocamlbricks versions are used now.
+
+2010-05-26  Luca Saiu  <positron@gnu.org>
+
+	Imported launchpad translations. Added Brazilian Portuguese
+
+2010-05-20  Luca Saiu  <positron@gnu.org>
+
+	Imported translations from launchpad. Enabled Russian and Turkish.
+
+2010-05-20  Launchpad Code Hosting  <codehost@crowberry>
+
+	Launchpad automatic translations update.
+
+2010-05-05  Launchpad Code Hosting  <codehost@crowberry>
+
+	Launchpad automatic translations update.
+
+2010-05-04  Launchpad Code Hosting  <codehost@crowberry>
+
+	Launchpad automatic translations update.
+
+2010-05-19  Luca Saiu  <positron@gnu.org>
+
+	Manually imported the Spanish translation from launchpad. Apparently it was not pushed into the appropriate branch as it was supposed to be. Whatever.
+
+2010-05-03  Luca Saiu  <positron@gnu.org>
+
+	Updated translations from launchpad
+
+2010-04-26  Luca Saiu  <positron@gnu.org>
+
+	Re-generated po files, as I had forgotten to do... Shit, we must remember to do this every time we update a translation or messages in English!
+
+2010-04-26  Luca Saiu  <positron@gnu.org>
+
+	Imported the Spanish translation by Juan-Sebastian Lopez Villa
+
+2010-04-15  Luca Saiu  <positron@gnu.org>
+
+	French translation: added circumflex accents to "cable" where missing
+
+2010-04-15  Luca Saiu  <positron@gnu.org>
+
+	Added stubs (no translations yet, as I do not speak those languages) for the next languages which we are likely to be able to support
+
+2010-04-15  Luca Saiu  <positron@gnu.org>
+
+	Italian translation: converted some occurrences of "vertice" into "arco". Made the use of the plural form more consistent.
+
+2010-04-15  Luca Saiu  <positron@gnu.org>
+
+	Regenerated po files. Line numbers will be a little messy for merging...
+
+2010-04-15  Luca Saiu  <positron@gnu.org>
+
+	Fixed a typo in a translated English string. This change will be useful for testing launchpad translations
+
+2010-04-06  Luca Saiu  <positron@gnu.org>
+
+	Added the pot file to the repository, so that launchpad can automatically recognize it and use it for web-based translations
+
+2010-02-11  jean  <jean@optimum>
+
+	Removed does-process-exist stuff from marionnet: using now the ocamlbricks' function UnixExtra.is_process_alive.
+
+2010-02-10  jean  <jean@optimum>
+
+	Marionnet adapted to the new functorized version of gettext.
+
+2010-02-09  jean  <jean@optimum>
+
+	Fix some problems in machine's insert/update dialog.
+
+2010-02-08  jean  <jean@optimum>
+
+	Minor changes related to Unix.system calls.
+
+2010-02-08  jean  <jean@optimum>
+
+	Gettext support removed (it is now in ocamlbricks).
+
+2010-01-31  jean  <jean@optimum>
+
+	Texts_interface.texts_interface#import_file does not calls anymore external programs: it calls UnixExtra utilities.
+
+2010-01-30  jean  <jean@optimum>
+
+	Added Log.system_or_ignore that ignores the result but following Log conventions.
+
+2010-01-29  jean  <jean@optimum>
+
+	UnixExtra.system_or_fail wrapped in log.ml.
+	Using Log.system_or_fail commands are automatically logged in debug mode.
+	Furthermore, when debugging is not enable, a command redirection (/bin/sh 
+	compatible, i.e. 1>/dev/null 2>/dev/null) is automatically appended to the 
+	command. In order to prevent this behaviour, Log.system_or_fail provides 
+	the optional parameters ?hide_output and ?hide_errors. Setting these
+	parameters both to false, nothing will be appended to the command. 
+
+2010-01-27  jean  <jean@optimum>
+
+	Marionnet binded to the new ocamlbricks' log system. Also fixed the problem of "&>/dev/null".
+	The file log.ml contains now a simple functor application. 
+	The redirections "&>/dev/null" are now /bin/sh compatible. Furthermore, they are not performed 
+	in the "debug mode" (because they have a sense only in the "non-debug mode", i.e. in our standard
+	running mode, which is silent). Hence, when the debug mode is activated, performed shell commands
+	are now printed on the log channel (stderr).
+
+2010-01-18  jean  <jean@optimum>
+
+	Workaround related to Gnome/Ubuntu global setting: now also the dot-revert-edge image is forced to be shown.
+
+2010-01-18  jean  <jean@optimum>
+
+	Fixed the harmless (but quite alarming) exception Failure("the current working directory is currently not set").
+
+2010-01-15  jean  <jean@optimum>
+
+	Workaround for gnome/Ubuntu problem of showing images in menus: images are now forced to be displayed. Some GTK warnings have also been avoided. 
+
+2009-11-23  jean  <jean@optimum>
+
+	Added chip.mli and an experimental wrapper for GTK buttons (converting events into wire settings)
+
+2009-11-23  jean  <jean@optimum>
+
+	Motherboard tracing depends now from Global_options.get_debug_mode
+
+2009-11-23  jean  <jean@optimum>
+
+	In chip/ subproject, the component method destroy has now the signature unit -> unit (instead of unit)
+
+2009-07-21  jean  <jean@optimum>
+
+	Minor bug fixed: in State.import_network the network backup is performed by mean of simple buffers.
+	In the previous version this backup was performed creating a new network (named "backup") 
+	and using the method Mariokit.Netmodel.copyFrom (net:network) for restoring self#network
+	in case of accident. But any time you create a new object containing wires of a system
+	(in our case backup), you have to manually manage its destruction, eliminating wires 
+	from the system. Instead of defining a method Mariokit.Netmodel.network#destroy I have
+	preferred a classic solution based on buffers storing the object data content. 
+	Implicitely, this class should be forever a singleton.  
+
+2009-07-21  jean  <jean@optimum>
+
+	A lot of changes and simplifications in chip.ml and chip_parser_p4.ml (-100 lines); now ports are objects.  
+
+2009-07-21  jean  <jean@optimum>
+
+	Added the class Chip.wcounter of wires encapsulating counters. 
+
+2009-07-16  jean  <jean@optimum>
+
+	Support to display a graph representation (dot) of the system (motherboard) structure (press key F3). 
+
+2009-07-10  jean  <jean@optimum>
+
+	The parameter name of chip classes changed to ?name (string option). 
+
+2009-07-10  jean  <jean@optimum>
+
+	Tracing methods in Chip regrouped in a single object.
+
+2009-07-10  jean  <jean@optimum>
+
+	Chip refactored and simplified.
+	Major changes in the chip.ml architecture:
+	instances of the class 'container' instead of lists
+	mutex related methods regrouped in the class 'mutex_methods'
+	destroy related methods regrouped in the class 'destroy_methods'
+	- when a component is destroyed, it is automatically removed
+	from all container that it belongs
+	class 'cable' has been rewritten and is now a really 
+	polymorphic ('a,'b) wire (instead of ('a,'a) wire)
+
+2009-11-23  jean  <jean@optimum>
+
+	Fixed a buglet in native linking; thanks Franck for the report
+
+2009-11-20  jean  <jean@optimum>
+
+	ease_package_creation
+	Just small changes to ease package creation (more variable in CONFIGME)
+	plus a directory dedicated to RPM package creation with spec files.
+
+2009-08-27  jean  <jean@optimum>
+
+	Work-around for a spin-button related bug and occurring in some versions of Debian and Ubuntu installation.
+	The changes concern only the file gui.xml. In this file, I set the last integers ("Page size") of all
+	GtkSpinButton.adjustment to 0. This change seems to be sufficient to prevent the strange behaviour
+	of some spin-buttons (machine#eth, hub#num_port,...).
+
+2009-07-07  jean  <jean@optimum>
+
+	Re-enable chip/chip_example.expanded.byte compilation
+
+2009-07-06  jean  <jean@optimum>
+
+	Minor change in Makefile.local to please ocaml 3.11
+
+2009-07-06  jean  <jean@optimum>
+
+	Temporarily disabled chip/chip_example.expanded.byte, which does not compile on my system nor on a Fedora 11 (virtual) machine
+
+2009-07-06  jean  <jean@optimum>
+
+	Fix forgot darcs add
+
+2009-06-26  jean  <jean@optimum>
+
+	Dot tuning completely managed with motherboard: now there aren't calls to st#refresh_sketch in gui_toolbar_DOT_TUNING.ml
+
+2009-06-26  jean  <jean@optimum>
+
+	Chip managed with recursive mutex and class Chip.cable defined as container of wires
+
+2009-06-25  jean  <jean@optimum>
+
+	Added chips "dot_tuning_manager" and "sketch_refresher" to the gui motherboard.
+	This is the first step for transforming the sketch refreshing in a side effect
+	of the gui motherboard stabilization.
+	
+	All dot tuning toolbar widgets, except cable revert, have a callback that set a
+	related wire (introduced in the class Mariokit.Dotoptions.network). This action
+	provokes a system stabilization, then a sketch refreshing.
+	
+	There aren't now direct calls to st#refresh_sketch() in the file 
+	gui_toolbar_DOT_TUNING.ml, except in the "cable revert" callback. 
+	Actually, I'm now not able to easily change this behaviour because the 
+	information "cable reverted" is stored into the cable object, which is a dinamic
+	part of the state. I need before an enhanced support of dinamic systems in chip.ml
+	(specially for the problem of garbage).
+
+2009-06-25  jean  <jean@optimum>
+
+	Example of usage of the keyword "complement" in the chip syntax.
+
+2009-06-25  jean  <jean@optimum>
+
+	Enhanced support for chips, wires and systems tracing (for debugging).
+
+2009-06-23  jean  <jean@optimum>
+
+	The chip Gui_motherboard.sensitiveness_manager defined now using a complement section.
+
+2009-06-23  jean  <jean@optimum>
+
+	Chip syntax extended: now the user may specify a class complement (a sequence of class_str_item)
+
+2009-06-23  jean  <jean@optimum>
+
+	Code restructuration: class Dotoptions.guiHandler moved from mariokit.ml to gui_toolbar_DOT_TUNING.ml.
+
+2009-06-12  jean  <jean@optimum>
+
+	Conflict on Makefile.local resolved
+
+2009-06-11  jean  <jean@optimum>
+
+	Added preprocessor providing macro INCLUDE_AS_STRING used now by Talking.does_directory_support_sparse_files.
+
+2009-06-11  jean  <jean@optimum>
+
+	Machines' ethernet cards default reset to 1 in gui.xml 
+
+2009-06-03  jean  <jean@optimum>
+
+	Adjustements before GTLL talk, default for machine's ethernet ports set to 2 with glade (temporary workaround)
+
+2009-06-01  jean  <jean@optimum>
+
+	Fix Marionnet misconfiguration in examples
+
+2009-06-01  jean  <jean@optimum>
+
+	prepare_bridge.sh: renamed the bridge from marbre to br0
+
+2009-06-01  jean  <jean@optimum>
+
+	Cosmetic change
+
+2009-06-01  jean  <jean@optimum>
+
+	Now the death monitor uses the C implementation of does_process_exist, moved from ocamlbricks. This is more robust and more portable than the previous ugly shell hack
+
+2009-05-29  jean  <jean@optimum>
+
+	Minor change
+
+2009-05-29  jean  <jean@optimum>
+
+	Minor problem about strings and translations, "Shutdown" means gracefully stop while "Power-off" means ungracefully stop. 
+
+2009-05-29  jean  <jean@optimum>
+
+	Added a warning in the log, specifying that one given excpetion is harmless; added a flush_all () in a place where it is very important to understand the log
+
+2009-05-29  jean  <jean@optimum>
+
+	Removed a failed command line from an error messages: pango was bitching about its reserved characters being abused
+
+2009-05-29  jean  <jean@optimum>
+
+	Renamed all %.p4.ml preprocessors in %_p4.ml to please ocaml 3.11.0 (packaged in debian unstable)
+
+2009-05-29  jean  <jean@optimum>
+
+	po/messages.pot removed from repository: it get darcs confused when pulling
+
+2009-05-28  jean  <jean@optimum>
+
+	Completed italian translation.
+
+2009-05-27  jean  <jean@optimum>
+
+	Lots of modification (550) to fr.po, changes some messages in sources, and update messages.pot
+
+2009-05-26  jean  <jean@optimum>
+
+	d[_^[_][DFixed some French regressions due to English strings update.
+
+2009-05-26  jean  <jean@optimum>
+
+	Fixed some English strings errors due to cut&paste.
+
+2009-05-25  jean  <jean@optimum>
+
+	Fixed a serious bug: now unique ids for devices are again unique :-)
+
+2009-05-23  jean  <jean@optimum>
+
+	Now my previous patch actually works
+
+2009-05-23  jean  <jean@optimum>
+
+	Makefile.local: now LANGUAGES is automatically computed, like suggested by Marco in a comment; po/messages.pot is now automatically generated by make and distributed, as it may help translators
+
+2009-05-21  jean  <jean@optimum>
+
+	Support for router port0 mandatory configuration.
+	Router's insert/update dialog allows now to specify the port0 ip 
+	configuration (ip/cidr-netmask). The module Ipv4 (added to ocamlbricks)
+	is used for managing parsing and checking of user-edited strings.
+	In this way, in particular, the netmask correctness checking has been fixed. 
+	
+	Note that I solved the problem of port0 router mandatory configuration
+	modifying the method "add_device" of the network_details_interface.ml treeview.
+	Now this method accept an optional parameter ?port_row_completions
+	which is an association list  {port_name -> row} allowing to specify 
+	some additional informations (row fields) about ports that will be created 
+	by the method. Actually, setting all fields at the creation time, we prevent some 
+	constraint violations caused by a not complete definition of a subtree hierarchy
+	(that was precisely the case of the port0 router mandatory configuration).
+
+2009-05-20  jean  <jean@optimum>
+
+	Updated some translated messages
+
+2009-05-20  jean  <jean@optimum>
+
+	Made the build system more robust when building po files; my previous fix now works
+
+2009-05-20  jean  <jean@optimum>
+
+	Made the build system more robust when building po files; now an error (correctly) stops the make process
+
+2009-05-07  jean  <jean@optimum>
+
+	Makefile support for non-ocamlbuild generated targets
+	There are now four variables for managing manually generated targets:
+	(1) MANUALLY_PRE_COPY_IN_build
+	(2) MANUALLY_PRE_MAKE_IN_build
+	(3) MANUALLY_POST_COPY_IN_build
+	(4) MANUALLY_POST_MAKE_IN_build
+	
+	which meaning is:
+	
+	(1) MANUALLY_PRE_COPY_IN_build is the list of files that 
+	must be copied in _build/ *before* the ocamlbuild processing
+	
+	(2) MANUALLY_PRE_MAKE_IN_build is the list of targets that
+	must be created in _build/ *before* the ocamlbuild processing
+	
+	(3) MANUALLY_POST_COPY_IN_build is the list of files that 
+	must be copied in _build/ *after* the ocamlbuild processing
+	
+	(4) MANUALLY_POST_MAKE_IN_build is the list of targets that 
+	must be created in _build/ *after* the ocamlbuild processing
+	
+	For each "foo.bar" appearing in one of MANUALLY_{PRE,POST}_MAKE_IN_build lists, 
+	you have to write in your Makefile.local a rule for "_build/foo.bar".
+	
+	The support automatically checks if files in MANUALLY_PRE_COPY_IN_build have
+	changed. When this condition is detected, the make process is interrupted and 
+	a "make clean" action is suggested to the user.
+	
+	The "main" entry is now defined as follow:
+	
+	main: ocamlbuild-stuff manually_pre_actions main-local data libraries programs manually_post_actions
+	@(echo "Success.")
+	
+	Example:
+	-----------------------------------------------------------------
+	(in the Makefile.local)
+	
+	foo.byte   : manually_pre_actions
+	foo.native : manually_pre_actions
+	
+	MANUALLY_PRE_COPY_IN_build = include_as_string.ml USAGE.txt
+	MANUALLY_PRE_MAKE_IN_build = include_as_string.cmo
+	
+	_build/include_as_string.cmo: include_as_string.ml
+	ocamlc -c -I +camlp4 camlp4lib.cma -pp camlp4of -o $@ $<
+	-----------------------------------------------------------------
+
+2009-05-07  jean  <jean@optimum>
+
+	Minor changes (spin names) in gui.xml and gui_dialog_ROUTER.ml
+
+2009-04-23  jean  <jean@optimum>
+
+	Consistent update of marionnet after changes in ocamlbricks (Identifier replaced by Counter)
+
+2009-04-23  jean  <jean@optimum>
+
+	Consistent update of marionnet after changes in ocamlbricks (UnixExtra flattened)
+
+2009-04-23  jean  <jean@optimum>
+
+	Consistent update of marionnet after changes in ocamlbricks (SysExtra flattened) 
+
+2009-04-22  jean  <jean@optimum>
+
+	Consistent update of marionnet after changes in ocamlbricks (StringExtra flattened) 
+
+2009-04-22  jean  <jean@optimum>
+
+	Consistent update of marionnet after changes in ocamlbricks (StrExtra flattened)
+
+2009-04-21  jean  <jean@optimum>
+
+	Consistent update of marionnet  after changes in ocamlbricks (PreludeExtra flattened and renamed)
+
+2009-04-21  jean  <jean@optimum>
+
+	Consistent update of marionnet after changes in ocamlbricks (ListExtra flattened)
+
+2009-04-20  jean  <jean@optimum>
+
+	Added developers decumentation. Targets: documentation-html-split; documentation-html-no-split; documentation-pdf.
+
+2009-04-20  jean  <jean@optimum>
+
+	Build system: updated C module support, solving some problem
+
+2009-04-17  jean  <jean@optimum>
+
+	Fixed progress bar translation.
+
+2009-04-15  jean  <jean@optimum>
+
+	Completed internationalization. I18n 100%. French 99%. Italian 5%.
+
+2009-04-14  jean  <jean@optimum>
+
+	Reporting buildsystem related changes from ocamlbricks
+
+2009-04-14  jean  <jean@optimum>
+
+	Completely translated gui/. Cleaned Makefile.local. I18n 70%. French 70%. Italian 5%.
+
+2009-04-13  jean  <jean@optimum>
+
+	Update of the buildsystem in order to be able to generate marionnet documentation
+
+2009-04-13  jean  <jean@optimum>
+
+	Added a syntax extension for s_ and f_; these functions may be called now with two arguments that corresponds, in the pot record, to the fields msgid and msgstr.
+	This patch is a temporary facility for generating the french translation fr.po.
+
+2009-04-13  jean  <jean@optimum>
+
+	Internationalized 40% of the gui; French translation 40%; Italian translation 5%.
+
+2009-04-11  jean  <jean@optimum>
+
+	Internationalization of Marionnet splash in italian and french with the new gettext wrapper and string extractor. Use targets: pot to create an updated po template; update-po to update every existing .po; compile-mo to obtain .mo files; install-mo to install mo files.
+
+2009-04-10  jean  <jean@optimum>
+
+	Automatized extraction of translatable strings, i.e. expressions of the form: 's_ "hello"' and 'f_ "hello"', anywhere in the marionnet repository.
+	All sources are now compiled with the option "-pp camlp4of extract_pot.p4". 
+	In this way, the compilation of the file "foo.ml" automatically generates a
+	file "foo.ml.pot" in the same subdirectory of _build/. 
+	This mechanism run indipendently from the fact that foo.ml needs to be 
+	compiled with some syntax extensions. 
+	
+	The makefile entry "pot" generates the file "_build/marionnet.pot" as
+	catenation (by mean of msgcat) of all the foo.ml.pot contained in build/.
+	
+	I tested with success some calls to "s_" and "f_" on the file 
+	gui/gui_motherboard.ml that uses the "chip" syntax extension.
+	
+	There remain a minor problem to fix: the file "foo.ml.pot" is generated twice, 
+	because both ocamlc and ocamldep are called in the Makefile using the *same*
+	variable PP_OPTION = camlp4of extract_pot.p4.cmo. I think that we have just 
+	to split PP_OPTION into two variables as, for instance, OCAMLC_PP_OPTION and
+	OCAMLDEP_PP_OPTION.
+	
+	Follow a log of my test, after editing gui/talking.ml in order to set the
+	translation of some utf-8 strings:
+	
+	[0 jean@factotum ~/DEVEL/repos/marionnet]$ make
+	...
+	[0 jean@factotum ~/DEVEL/repos/marionnet]$ make pot
+	Finished, 131 targets (131 cached) in 00:00:00.
+	Success: marionnet.byte was built
+	msgcat --use-first _build/gettext/gettext-example.ml.pot _build/gui/talking.ml.pot > _build/marionnet.pot
+	[0 jean@factotum ~/DEVEL/repos/marionnet]$ cat _build/marionnet.pot
+	# Copyright (C) OWNER
+	# AUTHOR, YEAR.
+	#
+	msgid ""
+	msgstr ""
+	"Project-Id-Version: marionnet\n"
+	"Report-Msgid-Bugs-To: marionnet-dev@marionnet.org\n"
+	"POT-Creation-Date: 2009-04-10 14:42:21\n"
+	"Content-Type: text/plain; charset=utf-8\n"
+	
+	#. generated by extract_pot.p4
+	#: gettext/gettext-example.ml:29
+	msgid "hello, world\n"
+	msgstr ""
+	
+	#. generated by extract_pot.p4
+	#: gettext/gettext-example.ml:31
+	msgid "Try `%s --help' for more information.\n"
+	msgstr ""
+	
+	#. generated by extract_pot.p4
+	#: gettext/gettext-example.ml:32
+	msgid "Report bugs to <%s>.\n"
+	msgstr ""
+	
+	#. generated by extract_pot.p4
+	#: gui/talking.ml:56
+	msgid "CHOISIR UN R[_\c3_][_\89_]PERTOIRE DE TRAVAIL"
+	msgstr ""
+	
+	#. generated by extract_pot.p4
+	#: gui/talking.ml:64
+	msgid "AJOUTER OU MODIFIER UNE MACHINE VIRTUELLE"
+	msgstr ""
+
+2009-04-09  jean  <jean@optimum>
+
+	Resolved conflict on Makefile.local
+
+2009-04-09  jean  <jean@optimum>
+
+	Added support for multi-threading in the chip/wire/system machinery
+	The basic get/set operations on wires are now controled with simple mutex. 
+	Regarding source chips, the emit operation is also performed in thread-mutual exclusion.
+	
+	Luca's recursive mutex are not necessary in this version even if they could be useful 
+	for preventing deadlocks in the case of a bad designed system (motherboard).
+	For "bad designed" I mean a system with a chip-stabilization function calling 
+	(directly or not) a get/set on a wire not *explicitely* connected to its ports.
+	
+	The get method of chips (generated by the camlp4 extension) call now the methods get_alone 
+	of its output ports. Thus, the name "get_alone" for this method seems to be more appropriate but, 
+	in the same time, not so user-mnemonic as "get". Also the name "get_alone" seems to me not very
+	self-explanatory: other possibilities could be "unsafe_get" or "private_get". 
+	I will take a decision about names in the future.
+
+2009-04-09  jean  <jean@optimum>
+
+	Fixed some bugs in the build system and in Makefile.local
+
+2009-04-09  jean  <jean@optimum>
+
+	gettext README: trivial changes
+
+2009-04-09  jean  <jean@optimum>
+
+	gettext: generalized (again) the type of f_
+
+2009-04-09  jean  <jean@optimum>
+
+	gettext: generalized the type of f_
+
+2009-04-09  jean  <jean@optimum>
+
+	gettext: added s_ and f_ (with correct types), for compatibility with ocamlgettext
+
+2009-04-09  jean  <jean@optimum>
+
+	Added a new wrapper for GNU Gettext, written by yours truly
+
+2009-04-09  jean  <jean@optimum>
+
+	Build system: added simple support for linking C modules to OCaml programs
+
+2009-04-07  jean  <jean@optimum>
+
+	Support for sensitiveness moved from state.ml to gui_motherboard.ml
+	The motherboard manage now two distinct parts of the gui: 
+	1) the title of the main window 
+	2) the st#app_state related sensitiveness of widgets
+
+2009-04-07  jean  <jean@optimum>
+
+	Support for virtual chips
+	Virtual chips are simply virtual classes: in this way the transition function of a chip
+	may refer virtual methods that will be implemented in descendent classes.
+
+2009-04-06  jean  <jean@optimum>
+
+	Gui motherboard introduction: the title of the main window is now automatically set when st#prj_filename is updated 
+
+2009-04-06  jean  <jean@optimum>
+
+	Minor changes in chip extension: the current system is now created automatically when the first wire is defined
+
+2009-04-06  jean  <jean@optimum>
+
+	Chip support extended in order to distinguish among sources (0 in-degree), relays (<>0 in-degree and <>0 out-degree) and sinks (0 out-degree).
+	The stabilization loop of a system now involves only relays. Once the relays are stabilized, the stabilization of sinks is called and thus performed in one step.
+
+2009-04-06  jean  <jean@optimum>
+
+	Fixed some troubles with labels using the pango markup language: #set_text replaced by #set_label
+
+2009-04-06  jean  <jean@optimum>
+
+	Added "edit" target to Makefile.local: $EDITOR is called with args {.,gui,chip}/*.ml{,i}
+
+2009-04-03  jean  <jean@optimum>
+
+	Fixed problem of Project->New and Project->Open when the user choose to save the open project: the progress bar is now visible
+
+2009-04-03  jean  <jean@optimum>
+
+	Fixed bug in State.copy_project_into introduced by the new (asynchronous) version of State.save_project
+
+2009-04-03  jean  <jean@optimum>
+
+	State.save_project now run with a progress bar
+	In order to set the progress bar fraction we suppose that the (unknown) size of the generated 
+	.mar will be approximatively 8 times lesser than the size (known) of the working directory.
+
+2009-04-03  jean  <jean@optimum>
+
+	Progress_bar.make_progress_bar_dialog generalization and re-styling
+
+2009-04-03  jean  <jean@optimum>
+
+	Fixed the problem of deleting the main window: now the 'x' button is equivalent to Project->Quit
+
+2009-03-31  jean  <jean@optimum>
+
+	Talking.ml devitalization phase 11: the old Talking_PROJECT_NEW replaced by a call to Menu_factory.Make_entry in gui_menubar_MARIONNET.ml
+
+2009-03-31  jean  <jean@optimum>
+
+	Talking.ml devitalization phase 10: the old Talking_PROJECT_OPEN replaced by a call to Menu_factory.Make_entry in gui_menubar_MARIONNET.ml
+
+2009-03-31  jean  <jean@optimum>
+
+	Talking.ml devitalization phase 9: the old Talking_PROJECT_SAVE replaced by a call to add_stock_item in gui_menubar_MARIONNET.ml
+
+2009-03-31  jean  <jean@optimum>
+
+	Talking.ml devitalization phase 8: the old Talking_PROJECT_SAVE_AS replaced by a call to Menu_factory.Make_entry in gui_menubar_MARIONNET.ml
+	A minor bug also fixed: the filename is now completed by the extension "mar" if needed
+
+2009-03-31  jean  <jean@optimum>
+
+	Talking.ml devitalization phase 7: the old Talking_PROJECT_COPY_INTO replaced by a call to Menu_factory.Make_entry in gui_menubar_MARIONNET.ml
+	A minor bug also fixed: the filename is now completed by the extension "mar" if needed
+
+2009-03-31  jean  <jean@optimum>
+
+	Talking.ml devitalization phase 6: the old Talking_PROJECT_CLOSE replaced by a call to  Menu_factory.Make_entry in gui_menubar_MARIONNET.ml
+
+2009-03-31  jean  <jean@optimum>
+
+	Talking.ml devitalization phase 5: the old Talking_PROJECT_EXPORT replaced by a call to  Menu_factory.Make_entry in gui_menubar_MARIONNET.ml
+
+2009-03-30  jean  <jean@optimum>
+
+	Talking.ml devitalization phase 4: the old Talking_PROJECT_QUIT replaced by a call to Menu_factory.Make_entry in gui_menubar_MARIONNET.ml
+
+2009-03-30  jean  <jean@optimum>
+
+	Talking.ml devitalization phase  3: the old Talking_OPTIONS_CWD replaced by a call to Menu_factory.Make_entry in gui_menubar_MARIONNET.ml
+
+2009-03-30  jean  <jean@optimum>
+
+	Talking.ml devitalization phase 2: removed the old Talking_HELP_A_PROPOS
+
+2009-03-30  jean  <jean@optimum>
+
+	Talking.ml devitalization phase 1: the old Talking_BASE_BUTTONS is now partly in state.ml, partly in gui_window_MARIONNET.ml
+
+2009-03-27  jean  <jean@optimum>
+
+	Added the directory chip/ containing a preliminary version of a syntax extension for reactive system; this extension could be used for reprogramming the side-effect inter-dependencies (gui/state) in marionnet
+
+2009-03-27  jean  <jean@optimum>
+
+	Fix conflicts
+
+2009-03-27  jean  <jean@optimum>
+
+	menu_factory.ml{,i} moved to gui/
+
+2009-03-27  jean  <jean@optimum>
+
+	Devitalization of gui.glade (now renamed in gui/gui.xml) and major reorganization of gui-related code
+	The word "devitalization" means that the glade generated file doesn't contain any translatable string. 
+	Such strings are now in gui/<source>.ml and are thus ready to be encapsulated in a call for translation.
+	The sub-directory gui/ is now dedicated to sources completing the glade specification. 
+	This "completion" concerns:
+	1) translatable strings
+	2) dynamic widgets 
+	
+	Names of gui/ files follow a convention: relevant widget defined in glade are named using capital letters.
+	If a source file is created in order to complete a widget, it takes in gui/ the name of the widget prefixed 
+	by "gui_" and suffixed by ".ml". For instance, the widget menubar_FOO will be implemented by 
+	gui/gui_menubar_FOO.ml.
+	
+	Also, the gui-related code has been massively refactored. The file talking.ml still exists but it has been
+	split into several sources, usually 2 per component. Actually, each component "foo" with a dialog 
+	"dialog_FOO" defined with glade, has essentially two related files:
+	1) gui/gui_foo.ml
+	2) gui/gui_dialog_FOO.ml
+	The first file defines callbacks, while the second encapsulated the glade dialog definition
+	in order to build a dialog returning an environment, i.e. a dialog with a more abstract behaviour. 
+	Component-related menus are created with a couple of functors defined in:  
+	./gui/gui_toolbar_COMPONENTS_layouts.ml{,i}
+	
+	Two templates:
+	./gui/gui_component-node-with-state.ml-template
+	./gui/gui_component-node-without-state.ml-template
+	show how to create the gui-related part of a new component. The first show how to implement
+	the gui for components without state (like an hub), while the second show how to implement the gui 
+	for a components with state (like a machine, i.e. with a ungracefully_stop action).
+
+2009-03-25  jean  <jean@optimum>
+
+	Fixed talking.ml: it was still using the old name for an ocamlbricks function which was recently renamed
+
+2009-03-17  jean  <jean@optimum>
+
+	treeview: important performance optimizations
+
+2009-02-23  jean  <jean@optimum>
+
+	Add configuration variable to choose the terminal to run virtual machines (xterm, gnome-terminal,....)
+
+2009-02-23  jean  <jean@optimum>
+
+	Fixed bug #128 (Creation of a filesytem variant always returns ok)
+
+2009-02-23  jean  <jean@optimum>
+
+	Cleaning and concatenate files pathname.ml and initialization.ml, using the same function to initialize all variables in Initialization
+
+2009-02-16  jean  <jean@optimum>
+
+	Bugfix: fixed pathname computation at initialization time; configuration variable names were previously ignored
+
+2009-01-26  jean  <jean@optimum>
+
+	Migration to glade-3: major changes to gui.glade and dependent sources.
+	Identifiers in gui.glade are now unique as required by glade. Consequently,
+	the module for managing devices (hub, switches and router) in talking.ml has been
+	split into different modules, one per device.
+	Some internal modules have been renamed (*GWINTERNET -> *SOCKET) or removed (*SERIE,*DEBUG) 
+	in talking.ml.
+
+2009-01-21  jean  <jean@optimum>
+
+	Add ip entry for routers in gui.glade (manually modified with kdiff3 and kate -e utf8)
+	Both glade-2 and glade-3 massively change our gui.glade. In order to safely edit this file, 
+	I've worked with glade-2, then merged the dialog_ROUTER section with the 
+	original file using kdiff3 (great tool). Other changes have been made using kate.
+	Note that kate offers fold/expand features for xml and seems to me better than 
+	xml-specialized editors that I've tried (spending a lot of time!). I couldn't easily use 
+	the nxml emacs mode.
+	However, kate requires some tricks: it must be called with -e utf8 (it ignores the xml header) 
+	and the name of the file must terminate with the suffix .xml in order to automatically charge
+	to the xml mode. Moreover, the xml mode (with fold/unfold) cannot be loaded after startup,
+	at least with my version of kate (Qt: 3.3.8b, KDE: 3.5.10, Kate: 2.5.10). 
+	Hence, we need to make a hard link (a symlink seems to confuse kate (life is beautiful)). 
+	We now need to fully migrate gui.glade to glade-3!!!
+
+2009-01-14  jean  <jean@optimum>
+
+	Fix the polarity of routers to MDI (like machines), and extend the type of polarity in order to foresee intelligent ports
+
+2009-01-14  jean  <jean@optimum>
+
+	Fixed bug #125 (crossed cables not correctly reloaded)
+
+2009-01-14  jean  <jean@optimum>
+
+	Bad copy-and-past fixed.
+
+2009-01-14  jean  <jean@optimum>
+
+	Minor changes, some names has been replaced by the token ()
+
+2008-08-20  jean  <jean@optimum>
+
+	Reverted previous patch that broke ocamldoc generation.
+
+2008-08-08  jean  <jean@optimum>
+
+	Shrinked directory included in building process.
+
+2008-07-23  jean  <jean@optimum>
+
+	Fixed documentation generation. Use make ocamldoc.
+
+2008-07-14  jean  <jean@optimum>
+
+	marionnet.odocl
+
+2008-07-08  jean  <jean@optimum>
+
+	Now the router filesystem name is user-configurable
+
+2008-07-08  jean  <jean@optimum>
+
+	Changed the router default filesystem name from router-the-one-and-only to router-default, removing one useless level of symlinks
+
+2008-06-23  jean  <jean@optimum>
+
+	Marionnet is now compatible with the new experimental VDE. From this moment our VDE patch is obsolte.
+
+2008-06-16  jean  <jean@optimum>
+
+	Made the daemon less verbose in non-debug mode; cosmetic changes
+
+2008-06-16  jean  <jean@optimum>
+
+	Fixed an embarassing log bug; minor cosmetic changes
+
+2008-06-13  jean  <jean@optimum>
+
+	Added simple debugging facility for forests
+
+2008-06-10  jean  <jean@optimum>
+
+	Very minor fix
+
+2008-06-10  jean  <jean@optimum>
+
+	Fixed a file backward-compatibility problem
+
+2008-06-10  jean  <jean@optimum>
+
+	Added (still relatively crude) logging support. Removed debug prints in non-debug mode
+
+2008-06-10  jean  <jean@optimum>
+
+	Fixed the bug preventing machine virtual terminals to show up in non-debug mode (reported by Jonathan)
+
+2008-06-10  jean  <jean@optimum>
+
+	Bugfix: MARIONNET_FILESYSTEMS_PATH was called MARIONNET_FILESYSTEMS_DIRECTORY in filesystems.ml
+
+2008-06-09  jean  <jean@optimum>
+
+	Fix darcs conflict
+
+2008-06-09  jean  <jean@optimum>
+
+	Adjusted calls to ocamlbricks library, after the renaming of some functions of the library
+
+2008-05-28  jean  <jean@optimum>
+
+	Synced to propagate the Makefile fix by Jean-Vincent
+
+2008-05-19  jean  <jean@optimum>
+
+	Added support for an optional prefix to prepend to VDE executables; this allows us to install patched versions in a clean way, before our modifications are officially integrated in VDE
+
+2008-04-28  jean  <jean@optimum>
+
+	Added some starup sanity checks verifying that installation requirements are met
+
+2008-04-28  jean  <jean@optimum>
+
+	Updated the run targets, to have stack traces in case of failure
+
+2008-04-28  jean  <jean@optimum>
+
+	Reintroduced MARIONNET_HOME (now renamed into MARIONNET_PREFIX) and other path personalization variables, as *optional* configuration variables
+
+2008-04-24  jean  <jean@optimum>
+
+	Synced from buildsystem
+
+2008-04-24  jean  <jean@optimum>
+
+	Fixed bug #113; slightly extended the related functionality
+
+2008-04-21  jean  <jean@optimum>
+
+	Synced from buildsystem
+
+2008-04-21  jean  <jean@optimum>
+
+	Synced from buildsystem
+
+2008-04-18  jean  <jean@optimum>
+
+	Task #117 done
+
+2008-04-18  jean  <jean@optimum>
+
+	Renamed the configuration variable SOCKET_NAME into MARIONNET_SOCKET_NAME
+
+2008-04-18  jean  <jean@optimum>
+
+	Minor changes
+
+2008-04-18  jean  <jean@optimum>
+
+	Fixed bug #111
+
+2008-04-17  jean  <jean@optimum>
+
+	Exam modality overhaul
+
+2008-04-17  jean  <jean@optimum>
+
+	EDialogs.ask_for_file now correctly displays cwd_at_startup_time as default
+
+2008-04-17  jean  <jean@optimum>
+
+	Cosmetic changes in comments
+
+2008-04-17  jean  <jean@optimum>
+
+	Synced from buildsystem
+
+2008-04-17  jean  <jean@optimum>
+
+	Completed task #114 and task #121
+
+2008-04-17  jean  <jean@optimum>
+
+	Implemented the debug mode(task #121), even if it does essentially nothing as of now; bumped revision number
+
+2008-04-17  jean  <jean@optimum>
+
+	Retouched ico.invert-arcs.png; now it looks much better on light background
+
+2008-04-17  jean  <jean@optimum>
+
+	Fixed references to a moved file
+
+2008-04-17  jean  <jean@optimum>
+
+	Reverted the problematic part of a change made yesterday
+
+2008-04-17  jean  <jean@optimum>
+
+	Re-added some icons we actually need; replaced some icons whose license were unclear
+
+2008-04-16  jean  <jean@optimum>
+
+	The default directory for creating project files is not the PWD at the time of marionnet startup
+
+2008-04-16  jean  <jean@optimum>
+
+	Removed the MARIONNET_HOME variable; now we use the information in meta.ml instead
+
+2008-04-16  jean  <jean@optimum>
+
+	Synced from buildsystem
+
+2008-04-16  jean  <jean@optimum>
+
+	Added picture files (only the ones we actually need, this time)
+
+2008-04-15  jean  <jean@optimum>
+
+	Added a missing semicolon
+
+2008-04-15  jean  <jean@optimum>
+
+	Synced from buildsystem
+
+2008-04-15  jean  <jean@optimum>
+
+	Fixed a nasty bug: the filesystem history treeview was dumped at *load* time, sometimes destroying part of the loaded state
+
+2008-04-15  jean  <jean@optimum>
+
+	Changed the configuration file naming convention, as requested by Jonathan; synced from buildsystem
+
+2008-04-14  jean  <jean@optimum>
+
+	Synced from buildsystem
+
+2008-04-14  jean  <jean@optimum>
+
+	Synced from buildsystem
+
+2008-04-14  jean  <jean@optimum>
+
+	Marionnet *can* be run as root again; only a non-fatal warning dialog is shown
+
+2008-04-14  jean  <jean@optimum>
+
+	Re-added and enabled can_directory_host_sparse_files.sh (renamed into marionnet-can-directory-host-sparse-files)
+
+2008-04-14  jean  <jean@optimum>
+
+	Added the directory useful-scripts, with Jean-Vincent's prepare-bridge script. It may be useful even if we don't rely on it any more.
+
+2008-04-14  jean  <jean@optimum>
+
+	The bridge name was still hardwired...
+	...in a source file; thanks to Didier Hoareau for reporting the problem.
+	Now the bridge name should only be determined by MARIONNET_BRIDGE.
+
+2008-04-11  jean  <jean@optimum>
+
+	Sorry, I recorded a version which was designed to fail, by mistake
+
+2008-04-11  jean  <jean@optimum>
+
+	Made the dot invocation more robust...
+	...in the sense that at least we show an understandable error message if it
+	fails. Other very minor changes.
+
+2008-04-10  jean  <jean@optimum>
+
+	marionnet_daemon is now marionnet-daemon. A dash is nicer.
+
+2008-04-10  jean  <jean@optimum>
+
+	Renamed daemon into marionnet_daemon
+
+2008-04-10  jean  <jean@optimum>
+
+	Some minor fixes
+
+2008-04-10  jean  <jean@optimum>
+
+	Synced from buildsystem; cosmetic changes
+
+2008-04-08  jean  <jean@optimum>
+
+	Configuration files are now used also for MARIONNET_BRIDGE and MARIONNET_KEYBOARD_LAYOUT
+
+2008-04-08  jean  <jean@optimum>
+
+	Marionnet uses configuration files now
+
+2008-04-07  jean  <jean@optimum>
+
+	Fixed stupid typo
+
+2008-04-07  jean  <jean@optimum>
+
+	I eventually found a less ugly way to exit closing all threads
+
+2008-04-07  jean  <jean@optimum>
+
+	Synced from buildsystem
+
+2008-04-07  jean  <jean@optimum>
+
+	Synced from buildsystem
+
+2008-04-07  jean  <jean@optimum>
+
+	Worked around a problem with OCamlBuild 3.10.0
+
+2008-04-07  jean  <jean@optimum>
+
+	Synced from buildsystem
+
+2008-04-04  jean  <jean@optimum>
+
+	Very minor changes
+
+2008-04-04  jean  <jean@optimum>
+
+	The daemon must now run as root
+	...And other, very minor, changes.
+
+2008-04-04  jean  <jean@optimum>
+
+	Fixed a thread issues related to lablgtk.
+	Thanks a lot to Jacques Garrigue for his workaround suggestion (see
+	http://www.marionnet.org/pipermail/marionnet-dev/2008-April/000062.html).
+	Some very minor changes.
+
+2008-04-03  jean  <jean@optimum>
+
+	Minor changes
+
+2008-04-03  jean  <jean@optimum>
+
+	Now we don't link any more with gtkInit.
+	And other very minor changes.
+
+2008-04-03  jean  <jean@optimum>
+
+	Improved and simplified error-handling in daemon connection
+
+2008-04-03  jean  <jean@optimum>
+
+	Improved error handling in daemon communication
+
+2008-04-03  jean  <jean@optimum>
+
+	Implemented gateway tap support
+	Gateway tap support is now implemented (server-side); the client
+	side works. The bridge name is still hardwired.
+
+2008-04-03  jean  <jean@optimum>
+
+	Synced from buildsystem
+
+2008-04-03  jean  <jean@optimum>
+
+	Added NEWS (it's from the previous sync, but I had forgotten it)
+
+2008-04-03  jean  <jean@optimum>
+
+	Synced from buildsystem
+
+2008-04-02  jean  <jean@optimum>
+
+	Daemon changes
+	Removed support for dynamically-created bridges (we decided to only
+	support bridges which have been already created in the system when
+	Marionnet starts up).
+	Improved (it's not completely finished yet) support for gateway taps.
+	Disabled the bridge as a global resource; support for global resources
+	remain, and it can be used for something different in the future, if the
+	need arises.
+	Minor refactoring and cleaning.
+
+2008-04-02  jean  <jean@optimum>
+
+	Removed obsolete debug prints in daemon.ml
+
+2008-04-02  jean  <jean@optimum>
+
+	Removed some old commented-out code
+	This patch is just for testing the new darcs e-mail notification system.
+
+2008-04-02  jean  <jean@optimum>
+
+	Trivial change
+	This is just for testing the new e-mail notification system.
+
+2008-04-02  jean  <jean@optimum>
+
+	Now the daemon destroys all resources on exit
+
+2008-04-02  jean  <jean@optimum>
+
+	Synced from buildsystem
+
+2008-04-01  jean  <jean@optimum>
+
+	death_monitor: fixed a possible bug
+
+2008-04-01  jean  <jean@optimum>
+
+	Implemented client-side daemon support, and integrated with Marionnet. Now Marionnet also runs as non-root, and asks the daemon for tuntap-related services. Updated death_monitor. *Socket* taps don't work yet, but ghostification taps (for accessing the host X server) are ok.
+
+2008-03-28  jean  <jean@optimum>
+
+	Fixed an incredibly nasty bug related to signals. Now also the client side of the daemon support is mostly implemented.
+
+2008-03-28  jean  <jean@optimum>
+
+	The server-side of the helper daemon support is now essentially finished.
+
+2008-03-27  jean  <jean@optimum>
+
+	Started the daemon; synced from buildsystem
+
+2008-03-26  jean  <jean@optimum>
+
+	Fixed stupid typo
+
+2008-03-26  jean  <jean@optimum>
+
+	Added missing copyright header to gui.glade
+
+2008-03-26  jean  <jean@optimum>
+
+	Synced build system from the buildsystem project. Filled THANKS and AUTHORS.
+
+2008-03-25  jean  <jean@optimum>
+
+	Re-created the repository.
+	This new repository only contains Marionnet, and supports the new
+	build system. Now Marionnet depends on the OCamlBricks library, which
+	is assumed to be installed.
+	Picture files are not included yet, but marionnet should be compilable,
+	installable and uninstallable.
+
