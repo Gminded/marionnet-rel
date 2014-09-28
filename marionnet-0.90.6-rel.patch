@@ -1,0 +1,1049 @@
+diff -uprN -x ''\''*~'\''' -x '*.swp' -x gui.xml marionnet-0.90.6-original/gui/gui_bricks.ml marionnet-0.90.6-relat/gui/gui_bricks.ml
+--- marionnet-0.90.6-original/gui/gui_bricks.ml	2010-12-03 12:16:05.000000000 +0100
++++ marionnet-0.90.6-relat/gui/gui_bricks.ml	2014-09-09 19:46:33.136070726 +0200
+@@ -153,8 +153,36 @@ let spin_byte ?tooltip ?label ?labelpos
+     sb
+   in
+   add_tooltip_label_and_labelpos_parameters ?tooltip ?label ?labelpos ?packing maker
++
++(** A spin for frequency, i.e. for float values  *)
++let spin_freq ?tooltip ?label ?labelpos ?(lower=0.000001) ?(upper=1000.)
++?(step_incr=0.01) ?packing value =
++  let maker ?tooltip ?packing () =
++    let sb = GEdit.spin_button ?packing ~width:120 ~digits:6 ~numeric:true () in
++    sb#adjustment#set_bounds ~lower ~upper ~step_incr ();
++    sb#set_value value;
++    Option.iter ((make_tooltips_for_container sb) sb#coerce) tooltip;
++    sb
++  in
++  add_tooltip_label_and_labelpos_parameters ?tooltip ?label ?labelpos ?packing maker
++
++(** A spin for the number of seconds since the Epoch, i.e. for very big values *)
++let spin_seconds ?tooltip ?label ?labelpos ?(lower=(-1000000000000)) ?(upper=1000000000000)
++?(step_incr=1) ?packing value =
++  let lower = float_of_int lower in
++  let upper = float_of_int upper in
++  let step_incr = float_of_int step_incr in
++  let maker ?tooltip ?packing () =
++    let sb = GEdit.spin_button ?packing ~width:120 ~digits:0 ~numeric:true () in
++    sb#adjustment#set_bounds ~lower ~upper ~step_incr ();
++    sb#set_value (float_of_int value);
++    Option.iter ((make_tooltips_for_container sb) sb#coerce) tooltip;
++    sb
++  in
++  add_tooltip_label_and_labelpos_parameters ?tooltip ?label ?labelpos ?packing maker
+ ;;
+ 
++
+ let byte_tooltips_default_array =
+   Array.of_list [
+     (s_ "First byte of the IPv4 address" );
+diff -uprN -x ''\''*~'\''' -x '*.swp' -x gui.xml marionnet-0.90.6-original/gui/gui_bricks.mli marionnet-0.90.6-relat/gui/gui_bricks.mli
+--- marionnet-0.90.6-original/gui/gui_bricks.mli	2010-12-03 12:16:05.000000000 +0100
++++ marionnet-0.90.6-relat/gui/gui_bricks.mli	2014-09-01 19:40:43.637013143 +0200
+@@ -52,6 +52,26 @@ val spin_byte :
+   ?packing:(GObj.widget -> unit) ->
+   int -> GEdit.spin_button
+ 
++val spin_freq :
++  ?tooltip:string ->
++  ?label:string ->
++  ?labelpos:[< `EAST | `NORTH | `SOUTH | `WEST > `NORTH ] ->
++  ?lower:float ->
++  ?upper:float ->
++  ?step_incr:float ->
++  ?packing:(GObj.widget -> unit) ->
++  float -> GEdit.spin_button
++
++val spin_seconds :
++  ?tooltip:string ->
++  ?label:string ->
++  ?labelpos:[< `EAST | `NORTH | `SOUTH | `WEST > `NORTH ] ->
++  ?lower:int ->
++  ?upper:int ->
++  ?step_incr:int ->
++  ?packing:(GObj.widget -> unit) ->
++  int -> GEdit.spin_button
++
+ val spin_ipv4_address :
+   ?tooltip:string ->
+   ?byte_tooltips: string array ->
+diff -uprN -x ''\''*~'\''' -x '*.swp' -x gui.xml marionnet-0.90.6-original/gui/gui_menubar_MARIONNET.ml marionnet-0.90.6-relat/gui/gui_menubar_MARIONNET.ml
+--- marionnet-0.90.6-original/gui/gui_menubar_MARIONNET.ml	2010-12-03 12:16:05.000000000 +0100
++++ marionnet-0.90.6-relat/gui/gui_menubar_MARIONNET.ml	2014-09-01 19:45:10.741747268 +0200
+@@ -350,9 +350,17 @@ let options_debug_mode                =
+   ~callback:(fun active ->
+          Log.printf "You toggled the option (debug)\n";
+          Global_options.Debug_level.set 1)
+-
+  ()
+ 
++module Relativization = Relativization.Make (State)
++let callback () = 
++    let result = Relativization.make_window ~title:(s_ "Relativization") () in
++    match result with
++    | None -> ()
++    | Some result -> Relativization.apply_changes ~result ()
++in
++add_stock_item (s_ "Relativization") ~stock:`EDIT ~callback ()
++
+ (** Hidden to user in this version. *)
+ let workaround_wirefilter_problem      =
+  add_check_item "Workaround wirefilter problem"
+@@ -365,6 +373,7 @@ let workaround_wirefilter_problem      =
+ 
+ let () = workaround_wirefilter_problem#coerce#misc#hide ()
+ 
++
+ (* **************************************** *
+                 Menu "Help"
+  * **************************************** *)
+diff -uprN -x ''\''*~'\''' -x '*.swp' -x gui.xml marionnet-0.90.6-original/machine.ml marionnet-0.90.6-relat/machine.ml
+--- marionnet-0.90.6-original/machine.ml	2010-12-03 12:16:05.000000000 +0100
++++ marionnet-0.90.6-relat/machine.ml	2014-08-28 16:50:09.282504428 +0200
+@@ -26,7 +26,22 @@ open Gettext;;
+ 
+ (* Machine related constants: *)
+ (* TODO: make it configurable! *)
+-module Const = struct
++module type Const_type = sig
++    val port_no_default : int
++ val port_no_min : int
++ val port_no_max : int
++
++ val memory_default : int
++ val memory_min : int
++ val memory_max : int
++
++ val time_frequency_default : unit -> float
++ val set_time_frequency_default : float -> unit
++ val time_convergence_default : unit -> int
++ val set_time_convergence_default : int -> unit
++end
++
++module Const : Const_type = struct
+  let port_no_default = 1
+  let port_no_min = 1
+  let port_no_max = 8
+@@ -34,6 +49,13 @@ module Const = struct
+  let memory_default = 48
+  let memory_min = 8
+  let memory_max = 256
++
++ let timefreq_default = ref 1.
++ let time_frequency_default () = !timefreq_default
++ let set_time_frequency_default value = timefreq_default := value
++ let timeconv_default = ref 0
++ let time_convergence_default () = !timeconv_default
++ let set_time_convergence_default value = timeconv_default := value
+ end
+ 
+ (* The type of data returned by the dialog: *)
+@@ -46,6 +68,8 @@ type t = {
+   distribution       : string;          (* epithet *)
+   variant            : string option;
+   kernel             : string;          (* epithet *)
++  time_frequency     : string;
++  time_convergence   : string;
+   terminal           : string;
+   old_name           : string;
+   }
+@@ -85,8 +109,10 @@ module Make_menus (Params : sig
+          port_no = port_no;
+          distribution = distribution;
+          variant = variant;
+-	 kernel = kernel;
++         kernel = kernel;
+          terminal = terminal;
++         time_frequency = time_frequency;
++         time_convergence = time_convergence;
+          old_name = _ ;
+          }
+       =
+@@ -95,12 +121,14 @@ module Make_menus (Params : sig
+           ~network:st#network
+           ~name
+           ~label
+-	  ~memory
+-	  ~port_no
++      ~memory
++      ~port_no
+           ~epithet:distribution
+           ?variant:variant
+           ~kernel
+- 	  ~terminal
++          ~time_frequency
++          ~time_convergence
++      ~terminal
+           ())
+       in
+       st#network_change action ();
+@@ -121,6 +149,8 @@ module Make_menus (Params : sig
+      let distribution = m#get_epithet in
+      let variant = m#get_variant in
+      let kernel = m#get_kernel in
++     let time_frequency = float_of_string m#get_time_frequency in
++     let time_convergence = int_of_string m#get_time_convergence in
+      let terminal = m#get_terminal in
+      (* The user cannot remove receptacles used by a cable. *)
+      let port_no_min = st#network#port_no_lower_of (m :> User_level.node)
+@@ -130,6 +160,8 @@ module Make_menus (Params : sig
+        ~memory ~port_no ~port_no_min
+        ~distribution ?variant
+        ~kernel
++       ~time_frequency 
++       ~time_convergence
+        ~terminal
+        ~updating:() (* the user cannot change the distrib & variant *)
+        ~ok_callback:Add.ok_callback  ()
+@@ -142,8 +174,10 @@ module Make_menus (Params : sig
+          port_no = port_no;
+          distribution = distribution;
+          variant = variant;
+-	 kernel = kernel;
++         kernel = kernel;
+          terminal = terminal;
++         time_frequency = time_frequency;
++         time_convergence = time_convergence;
+          old_name = old_name;
+          }
+       =
+@@ -154,6 +188,7 @@ module Make_menus (Params : sig
+           ~name ~label
+           ~memory ~port_no
+ 	  ~kernel ~terminal
++      ~time_frequency ~time_convergence
+       in
+       st#network_change action ();
+ 
+@@ -247,6 +282,8 @@ let make
+  ?kernel
+  ?(updating:unit option)
+  ?terminal
++ ?(time_frequency=Const.time_frequency_default ())
++ ?(time_convergence=Const.time_convergence_default ())
+  ?(help_callback=help_callback) (* defined backward with "WHERE" *)
+  ?(ok_callback=(fun data -> Some data))
+  ?(dialog_image_file=Initialization.Path.images^"ico.machine.dialog.png")
+@@ -263,7 +300,8 @@ let make
+       ?label
+       ()
+   in
+-  let (memory, port_no, distribution, variant, kernel, terminal) =
++  let (memory, port_no, distribution, variant, kernel, terminal, time_frequency,
++      time_convergence) =
+     let vbox = GPack.vbox ~homogeneous:false ~border_width:20 ~spacing:10 ~packing:w#vbox#add () in
+     let form =
+       Gui_bricks.make_form_with_labels
+@@ -274,6 +312,8 @@ let make
+          (s_ "Variant");
+          (s_ "Kernel");
+          (s_ "Terminal");
++         (s_ "Frequency");
++         (s_ "Convergence");
+          ]
+     in
+     form#add_section ~no_line:() "Hardware";
+@@ -318,7 +358,17 @@ let make
+       Option.iter (fun v -> result#set_active_value v) terminal;
+       result
+     in
+-    (memory, port_no, distribution, variant, kernel, terminal)
++    form#add_section "Relativization";
++    let time_frequency =
++        Gui_bricks.spin_freq ~lower:0.000001 ~upper:10000. ~step_incr:0.01
++      ~packing:(form#add_with_tooltip (s_ "Frequency of the virtual time for this machine, in Hz.")) time_frequency
++    in
++    let time_convergence =
++        Gui_bricks.spin_seconds ~packing:(form#add_with_tooltip (s_ "Point of convergence between virtual and real time, expressed as the number of seconds since the Epoch."))
++      time_convergence
++    in
++    (memory, port_no, distribution, variant, kernel, terminal, time_frequency,
++    time_convergence)
+   in
+   (* TODO: to be fully implemented or removed: *)
+   terminal#box#misc#set_sensitive false; 
+@@ -334,6 +384,8 @@ let make
+     | x      -> Some x
+     in
+     let kernel = kernel#selected in
++    let time_frequency = string_of_float time_frequency#value in
++    let time_convergence = string_of_int (int_of_float time_convergence#value) in
+     let terminal = terminal#selected in
+       { Data.name = name;
+         Data.label = label;
+@@ -342,6 +394,8 @@ let make
+         Data.distribution = distribution;
+         Data.variant = variant;
+         Data.kernel = kernel;
++        Data.time_frequency = time_frequency;
++        Data.time_convergence = time_convergence;
+         Data.terminal = terminal;
+         Data.old_name = old_name;
+         }
+@@ -423,6 +477,8 @@ class machine
+   ?variant
+   ?variant_realpath (* used just for creating the filesystem history device *)
+   ?kernel
++  ?time_frequency
++  ?time_convergence
+   ?terminal
+   ~port_no
+   ()
+@@ -447,7 +503,7 @@ class machine
+ 
+   inherit User_level.virtual_machine_with_history_and_ifconfig
+     ~network:network_alias
+-    ?epithet ?variant ?kernel ?terminal
++    ?epithet ?variant ?kernel ?terminal ?time_frequency ?time_convergence
+     ~history_icon:"machine"
+     ~ifconfig_device_type:"machine"
+     ~vm_installations
+@@ -492,6 +548,8 @@ class machine
+     ("distrib"  ,  self#get_epithet  );
+     ("variant"  ,  self#get_variant_as_string);
+     ("kernel"   ,  self#get_kernel   );
++    ("time_frequency", self#get_time_frequency);
++    ("time_convergence", self#get_time_convergence);
+     ("terminal" ,  self#get_terminal );
+     ("port_no"  ,  (string_of_int self#get_port_no))  ;
+     ])
+@@ -506,6 +564,8 @@ class machine
+   | ("variant"  , x ) -> self#set_variant (Some x)
+   | ("kernel"   , x ) -> self#set_kernel x
+   | ("terminal" , x ) -> self#set_terminal x
++  | ("time_frequency", x) -> self#set_time_frequency x
++  | ("time_convergence", x) -> self#set_time_convergence x
+   | ("eth"      , x ) (* backward-compatibility *)
+   | ("port_no"  , x ) -> self#set_port_no  (int_of_string x)
+   | _ -> () (* Forward-comp. *)
+@@ -517,12 +577,15 @@ class machine
+     let cow_file_name = self#create_cow_file_name in
+     let () =
+      Log.printf
+-       "About to start the machine %s\n  with filesystem: %s\n  cow file: %s\n  kernel: %s\n  xnest: %b\n"
++       "About to start the machine %s\n  with filesystem: %s\n  cow file: %s\n
++       kernel: %s\n  xnest: %b freq: %s conv: %s\n"
+        self#name
+        self#get_filesystem_file_name
+        cow_file_name
+        self#get_kernel_file_name
+        self#is_xnest_enabled
++       time_frequency
++       time_convergence
+     in
+     new Simulation_level.machine
+       ~parent:self
+@@ -533,6 +596,8 @@ class machine
+       ~memory:self#get_memory
+       ~umid:self#get_name
+       ~id
++      ~time_frequency
++      ~time_convergence
+       ~xnest:self#is_xnest_enabled
+       ~unexpected_death_callback:self#destroy_because_of_unexpected_death
+       ()
+@@ -572,13 +637,17 @@ class machine
+        can use a new cow file (see the make_simulated_device method) *)
+     self#destroy_right_now
+ 
+- method update_machine_with ~name ~label ~memory ~port_no ~kernel ~terminal =
++ method update_machine_with ~name ~label ~memory ~port_no ~kernel ~terminal
++ ~time_frequency ~time_convergence =
+    (* first action: *)
+-   self_as_virtual_machine_with_history_and_ifconfig#update_virtual_machine_with ~name ~port_no kernel;
++   self_as_virtual_machine_with_history_and_ifconfig#update_virtual_machine_with
++   ~name ~port_no ~time_frequency ~time_convergence kernel;
+    (* then we can set the object property "name" (read by #get_name): *)
+    self_as_node_with_defects#update_with ~name ~label ~port_no;
+    self#set_memory memory;
+    self#set_terminal terminal;
++   self#set_time_frequency time_frequency;
++   self#set_time_convergence time_convergence;
+ 
+ end;;
+ 
+@@ -600,6 +669,8 @@ class ['parent] machine =
+       ?umid
+       ?(xnest=false)
+       ~id
++      ~time_frequency
++      ~time_convergence
+       ~unexpected_death_callback
+       () ->
+ object(self)
+@@ -614,6 +685,8 @@ object(self)
+       ?umid
+       ~console:"xterm"
+       ~id
++      ~time_frequency
++      ~time_convergence
+       ~xnest
+       ~unexpected_death_callback
+       ()
+diff -uprN -x ''\''*~'\''' -x '*.swp' -x gui.xml marionnet-0.90.6-original/relativization.ml marionnet-0.90.6-relat/relativization.ml
+--- marionnet-0.90.6-original/relativization.ml	1970-01-01 01:00:00.000000000 +0100
++++ marionnet-0.90.6-relat/relativization.ml	2014-09-09 19:58:27.986007574 +0200
+@@ -0,0 +1,135 @@
++(* This file is part of Marionnet, a virtual network laboratory
++   Copyright (C) 2014		Gianluca Guidi
++
++   This program is free software: you can redistribute it and/or modify
++   it under the terms of the GNU General Public License as published by
++   the Free Software Foundation, either version 2 of the License, or
++   (at your option) any later version.
++
++   This program is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++   GNU General Public License for more details.
++
++   You should have received a copy of the GNU General Public License
++   along with this program.  If not, see <http://www.gnu.org/licenses/>. *)
++
++open Gettext
++open Gui_bricks
++
++module Make (State:sig val st:State.globalState end) = struct
++    open State
++    type reltime_t = {freq: float; conv: int; existing: bool}
++    let make_window ~title () =
++        let w = GWindow.dialog ~destroy_with_parent:true ~title
++                ~modal:true ~position:`CENTER () in
++        set_marionnet_icon w;
++        let tooltips = make_tooltips_for_container w in
++        let hbox1 = GPack.hbox ~spacing:10 ~packing:(w#vbox#pack
++          ~expand:true ~fill:false) () in
++        let vbox1 = GPack.vbox ~spacing:10 ~packing:(hbox1#pack
++            ~expand:true ~fill:false ~padding:20) () in
++        let _ = GMisc.label ~xalign:0. 
++                ~text:(s_ "Set default relativization parameters for new machines and routers.")
++                ~packing:(vbox1#pack ~padding:20) () in
++        let table = GPack.table ~rows:3 ~columns:2
++                ~col_spacings:5 ~row_spacings:10
++                  ~packing:(vbox1#pack ~expand:false) () in
++        let label_frequency = GMisc.label ~xalign:0.
++                ~text:(s_ "Frequency")
++                ~packing:(table#attach ~left:0 ~top:0) () in
++        let label_convergence = GMisc.label ~xalign:0.
++                ~text:(s_ "Convergence")
++                ~packing:(table#attach ~left:0 ~top:1) () in
++        let time_frequency = spin_freq ~packing:(table#attach
++                ~left:1 ~top:0) (Machine.Const.time_frequency_default ()) in
++        let time_convergence = spin_seconds
++                ~packing:(table#attach ~left:1 ~top:1)
++                (Machine.Const.time_convergence_default ()) in
++        let label_existing_machines = GMisc.label ~xalign:0.
++            ~text:(s_ "Apply to existing machines") 
++            ~packing:(table#attach ~left:0 ~top:2) () in
++        let existing_machines = GButton.check_button 
++            ~active:true ~packing:(table#attach ~left:1 ~top:2) () in
++        let frequency_tooltip = (s_ "Frequency of the virtual time for this machine, in Hz.") in
++        let convergence_tooltip = (s_ "Point of convergence between virtual and real time, expressed as the number of seconds since the Epoch.") in
++        let existing_machines_tooltip = (s_ "Also apply these parameters to existing powered-off machines and routers.") in
++        tooltips label_frequency#coerce frequency_tooltip;
++        tooltips time_frequency#coerce frequency_tooltip;
++        tooltips label_convergence#coerce convergence_tooltip;
++        tooltips time_convergence#coerce convergence_tooltip;
++        tooltips label_existing_machines#coerce existing_machines_tooltip;
++        tooltips existing_machines#coerce existing_machines_tooltip;
++        let get_widget_data () = {
++            freq = time_frequency#value; 
++            conv = int_of_float time_convergence#value;
++            existing = existing_machines#active
++        } in
++        let ok_callback reltime = if reltime.freq <> 0. then Some reltime
++        else None in
++        Gui_bricks.Dialog_run.ok_or_cancel w ~get_widget_data ~ok_callback ()
++
++
++    (* If the checkbox was checked, we have to iterate over the existing devices
++     * and update their time_frequency and time_convergence fields (only).*)
++    let update_existing_devices ~result () =
++        let machines = st#network#get_devices_that_can_startup ~devkind:`Machine in
++        let update_machine name =
++            let m = st#network#get_device_by_name name in
++            let m = ((Obj.magic m):>
++            Machine.User_level_machine.machine) in
++
++            (* Get existing values in order to reuse the existing method
++             * "update_machine_with"*)
++            let label = m#get_label in
++            let memory = m#get_memory in
++            let port_no = m#get_port_no in
++            let kernel = m#get_kernel in
++            let terminal = m#get_terminal in
++
++            (* New values*)
++            let time_frequency = string_of_float result.freq in
++            let time_convergence = string_of_int result.conv in
++
++            m#update_machine_with ~name ~label ~memory ~port_no ~kernel
++            ~terminal ~time_frequency ~time_convergence
++        in
++        let routers = st#network#get_devices_that_can_startup ~devkind:`Router in
++        let update_router name =
++            let r = st#network#get_device_by_name name in
++            let r = ((Obj.magic r):>
++            Router.User_level_router.router) in
++
++            (* Get existing values in order to reuse the existing method
++             * "update_router_with"*)
++            let label = r#get_label in
++            let kernel = r#get_kernel in
++            let show_unix_terminal = r#get_show_unix_terminal in
++            let port_no = r#get_port_no in
++            let port_0_ip_config = r#get_port_0_ip_config in
++
++            (* New values*)
++            let time_frequency = string_of_float result.freq in
++            let time_convergence = string_of_int result.conv in
++
++            r#update_router_with
++              ~name ~label ~port_0_ip_config ~port_no ~kernel ~show_unix_terminal
++              ~time_frequency ~time_convergence
++        in
++        let rec loop ~f ~devices ()  =
++            match devices with
++            | [] -> ()
++            | head :: tail -> f head; loop ~f ~devices:tail ()
++        in
++        loop ~f:update_machine ~devices:(machines ()) ();
++        loop ~f:update_router ~devices:(routers ()) ()
++
++    let apply_changes ~result () =
++        Machine.Const.set_time_frequency_default result.freq;
++        Machine.Const.set_time_convergence_default result.conv;
++        Router.Const.set_time_frequency_default result.freq;
++        Router.Const.set_time_convergence_default result.conv;
++        if result.existing then
++            update_existing_devices ~result ()
++
++end
+diff -uprN -x ''\''*~'\''' -x '*.swp' -x gui.xml marionnet-0.90.6-original/relativization.ml~ marionnet-0.90.6-relat/relativization.ml~
+--- marionnet-0.90.6-original/relativization.ml~	1970-01-01 01:00:00.000000000 +0100
++++ marionnet-0.90.6-relat/relativization.ml~	2014-09-04 21:40:01.850791472 +0200
+@@ -0,0 +1,119 @@
++open Gettext
++open Gui_bricks
++
++module Make (State:sig val st:State.globalState end) = struct
++    open State
++    type reltime_t = {freq: float; conv: int; existing: bool}
++    let make_window ~title () =
++        let w = GWindow.dialog ~destroy_with_parent:true ~title
++                ~modal:true ~position:`CENTER () in
++        set_marionnet_icon w;
++        let tooltips = make_tooltips_for_container w in
++        let hbox1 = GPack.hbox ~spacing:10 ~packing:(w#vbox#pack
++          ~expand:true ~fill:false) () in
++        let vbox1 = GPack.vbox ~spacing:10 ~packing:(hbox1#pack
++            ~expand:true ~fill:false ~padding:20) () in
++        let _ = GMisc.label ~xalign:0. 
++                ~text:(s_ "Set default relativization parameters for new machines and routers.")
++                ~packing:(vbox1#pack ~padding:20) () in
++        let table = GPack.table ~rows:3 ~columns:2
++                ~col_spacings:5 ~row_spacings:10
++                  ~packing:(vbox1#pack ~expand:false) () in
++        let label_frequency = GMisc.label ~xalign:0.
++                ~text:(s_ "Frequency")
++                ~packing:(table#attach ~left:0 ~top:0) () in
++        let label_convergence = GMisc.label ~xalign:0.
++                ~text:(s_ "Convergence")
++                ~packing:(table#attach ~left:0 ~top:1) () in
++        let time_frequency = spin_freq ~packing:(table#attach
++                ~left:1 ~top:0) (Machine.Const.time_frequency_default ()) in
++        let time_convergence = spin_seconds
++                ~packing:(table#attach ~left:1 ~top:1)
++                (Machine.Const.time_convergence_default ()) in
++        let label_existing_machines = GMisc.label ~xalign:0.
++            ~text:(s_ "Apply to existing machines") 
++            ~packing:(table#attach ~left:0 ~top:2) () in
++        let existing_machines = GButton.check_button 
++            ~active:true ~packing:(table#attach ~left:1 ~top:2) () in
++        let frequency_tooltip = (s_ "Frequency of the virtual time for this machine, in Hz.") in
++        let convergence_tooltip = (s_ "Point of convergence between virtual and real time, expressed as the number of seconds since the Epoch.") in
++        let existing_machines_tooltip = (s_ "Also apply these parameters to existing powered-off machines and routers.") in
++        tooltips label_frequency#coerce frequency_tooltip;
++        tooltips time_frequency#coerce frequency_tooltip;
++        tooltips label_convergence#coerce convergence_tooltip;
++        tooltips time_convergence#coerce convergence_tooltip;
++        tooltips label_existing_machines#coerce existing_machines_tooltip;
++        tooltips existing_machines#coerce existing_machines_tooltip;
++        let get_widget_data () = {
++            freq = time_frequency#value; 
++            conv = int_of_float time_convergence#value;
++            existing = existing_machines#active
++        } in
++        let ok_callback reltime = if reltime.freq <> 0. then Some reltime
++        else None in
++        Gui_bricks.Dialog_run.ok_or_cancel w ~get_widget_data ~ok_callback ()
++
++
++    (* If the checkbox was checked, we have to iterate over the existing devices
++     * and update their time_frequency and time_convergence fields (only).*)
++    let update_existing_devices ~result () =
++        let machines = st#network#get_devices_that_can_startup ~devkind:`Machine in
++        let update_machine name =
++            let m = st#network#get_device_by_name name in
++            let m = ((Obj.magic m):>
++            Machine.User_level_machine.machine) in
++
++            (* Get existing values in order to reuse the existing method
++             * "update_machine_with"*)
++            let label = m#get_label in
++            let memory = m#get_memory in
++            let port_no = m#get_port_no in
++            let kernel = m#get_kernel in
++            let terminal = m#get_terminal in
++
++            (* New values*)
++            let time_frequency = string_of_float result.freq in
++            let time_convergence = string_of_int result.conv in
++
++            m#update_machine_with ~name ~label ~memory ~port_no ~kernel
++            ~terminal ~time_frequency ~time_convergence
++        in
++        let routers = st#network#get_devices_that_can_startup ~devkind:`Router in
++        let update_router name =
++            let r = st#network#get_device_by_name name in
++            let r = ((Obj.magic r):>
++            Router.User_level_router.router) in
++
++            (* Get existing values in order to reuse the existing method
++             * "update_router_with"*)
++            let label = r#get_label in
++            let kernel = r#get_kernel in
++            let show_unix_terminal = r#get_show_unix_terminal in
++            let port_no = r#get_port_no in
++            let port_0_ip_config = r#get_port_0_ip_config in
++
++            (* New values*)
++            let time_frequency = string_of_float result.freq in
++            let time_convergence = string_of_int result.conv in
++
++            r#update_router_with
++              ~name ~label ~port_0_ip_config ~port_no ~kernel ~show_unix_terminal
++              ~time_frequency ~time_convergence
++        in
++        let rec loop ~f ~devices ()  =
++            match devices with
++            | [] -> ()
++            | head :: tail -> f head; loop ~f ~devices:tail ()
++        in
++        loop ~f:update_machine ~devices:(machines ()) ();
++        loop ~f:update_router ~devices:(routers ()) ()
++
++    let apply_changes ~result () =
++        Machine.Const.set_time_frequency_default result.freq;
++        Machine.Const.set_time_convergence_default result.conv;
++        Router.Const.set_time_frequency_default result.freq;
++        Router.Const.set_time_convergence_default result.conv;
++        if result.existing then
++            update_existing_devices ~result ()
++
++end
+diff -uprN -x ''\''*~'\''' -x '*.swp' -x gui.xml marionnet-0.90.6-original/router.ml marionnet-0.90.6-relat/router.ml
+--- marionnet-0.90.6-original/router.ml	2010-12-03 12:16:05.000000000 +0100
++++ marionnet-0.90.6-relat/router.ml	2014-08-28 17:03:21.136278944 +0200
+@@ -26,13 +26,34 @@ open Gettext;;
+ 
+ (* Router related constants: *)
+ (* TODO: make it configurable! *)
+-module Const = struct
++module Const : sig
++    val port_no_default : int
++    val port_no_min : int
++    val port_no_max : int
++
++    val port_0_ip_config_default : Ipv4.config
++    val memory_default : int
++
++    val time_frequency_default : unit -> float
++    val set_time_frequency_default : float -> unit
++    val time_convergence_default : unit -> int
++    val set_time_convergence_default : int -> unit
++
++end = struct
+  let port_no_default = 4
+  let port_no_min = 4
+  let port_no_max = 16
+ 
+  let port_0_ip_config_default = Initialization.router_port0_default_ipv4_config
+  let memory_default = 48
++
++ let timefreq_default = ref 1.
++ let time_frequency_default () = !timefreq_default
++ let set_time_frequency_default value = timefreq_default := value
++ let timeconv_default = ref 0
++ let time_convergence_default () = !timeconv_default
++ let set_time_convergence_default value = timeconv_default := value
++
+ end
+ 
+ 
+@@ -47,6 +68,8 @@ type t = {
+   variant            : string option;
+   kernel             : string;          (* epithet *)
+   show_unix_terminal : bool;
++  time_frequency     : string;
++  time_convergence   : string;
+   old_name           : string;
+   }
+ 
+@@ -87,6 +110,8 @@ module Make_menus (Params : sig
+          variant = variant;
+ 	 kernel = kernel;
+          show_unix_terminal = show_unix_terminal;
++         time_frequency = time_frequency;
++         time_convergence = time_convergence;
+          old_name = _ ;
+          }
+       =
+@@ -101,6 +126,8 @@ module Make_menus (Params : sig
+           ~kernel
+ 	  ~port_no
+  	  ~show_unix_terminal
++      ~time_frequency
++      ~time_convergence
+           ())
+       in
+       st#network_change action ();
+@@ -120,6 +147,8 @@ module Make_menus (Params : sig
+      let variant = r#get_variant in
+      let kernel = r#get_kernel in
+      let show_unix_terminal = r#get_show_unix_terminal in
++     let time_frequency = float_of_string r#get_time_frequency in
++     let time_convergence = int_of_string r#get_time_convergence in
+      let port_no = r#get_port_no in
+      let port_0_ip_config = r#get_port_0_ip_config in
+      (* The user cannot remove receptacles used by a cable. *)
+@@ -130,6 +159,8 @@ module Make_menus (Params : sig
+        ~port_no ~port_no_min
+        ~port_0_ip_config
+        ~kernel
++       ~time_frequency
++       ~time_convergence
+        ~updating:() (* the user cannot change the distrib & variant *)
+        ~ok_callback:Add.ok_callback  ()
+ 
+@@ -140,6 +171,8 @@ module Make_menus (Params : sig
+          port_no = port_no;
+ 	 kernel = kernel;
+          show_unix_terminal = show_unix_terminal;
++         time_frequency = time_frequency;
++         time_convergence = time_convergence;
+          old_name = old_name;
+          }
+       =
+@@ -148,6 +181,7 @@ module Make_menus (Params : sig
+       let action () =
+         r#update_router_with
+           ~name ~label ~port_0_ip_config ~port_no ~kernel ~show_unix_terminal
++          ~time_frequency ~time_convergence
+       in
+       st#network_change action ();
+ 
+@@ -240,6 +274,8 @@ let make
+  ?kernel
+  ?(updating:unit option)
+  ?(show_unix_terminal=false)
++ ?(time_frequency=Const.time_frequency_default ())
++ ?(time_convergence=Const.time_convergence_default ())
+  ?(help_callback=help_callback) (* defined backward with "WHERE" *)
+  ?(ok_callback=(fun data -> Some data))
+  ?(dialog_image_file=Initialization.Path.images^"ico.router.dialog.png")
+@@ -257,7 +293,8 @@ let make
+       ?label
+       ()
+   in
+-  let ((s1,s2,s3,s4,s5), port_no, distribution, variant, kernel, show_unix_terminal) =
++  let ((s1,s2,s3,s4,s5), port_no, distribution, variant, kernel,
++  show_unix_terminal, time_frequency, time_convergence) =
+     let vbox = GPack.vbox ~homogeneous:false ~border_width:20 ~spacing:10 ~packing:w#vbox#add () in
+     let form =
+       Gui_bricks.make_form_with_labels
+@@ -268,6 +305,8 @@ let make
+          (s_ "Variant");
+          (s_ "Kernel");
+          (s_ "Show unix terminal");
++         (s_ "Frequency");
++         (s_ "Convergence");
+          ]
+     in
+     form#add_section ~no_line:() "Hardware";
+@@ -309,7 +348,17 @@ let make
+         ~packing:(form#add_with_tooltip (s_ "Do you want access the router also by a Unix terminal?" ))
+         ()
+     in
+-    (port_0_ip_config, port_no, distribution, variant, kernel, show_unix_terminal)
++    form#add_section "Relativization";
++    let time_frequency =
++        Gui_bricks.spin_freq ~lower:0.000001 ~upper:10000. ~step_incr:0.01
++            ~packing:(form#add_with_tooltip (s_ "Frequency of the virtual time for this machine, in Hz.")) time_frequency
++    in
++    let time_convergence =
++        Gui_bricks.spin_seconds ~packing:(form#add_with_tooltip  (s_ "Point of convergence between virtual and real time, expressed as the number of seconds since the Epoch."))
++        time_convergence
++    in
++    (port_0_ip_config, port_no, distribution, variant, kernel,
++    show_unix_terminal, time_frequency, time_convergence)
+   in
+   let get_widget_data () :'result =
+     let name = name#text in
+@@ -331,6 +380,9 @@ let make
+     in
+     let kernel = kernel#selected in
+     let show_unix_terminal = show_unix_terminal#active in
++    let time_frequency = string_of_float time_frequency#value in
++    let time_convergence = string_of_int (int_of_float time_convergence#value)
++    in
+       { Data.name = name;
+         Data.label = label;
+         Data.port_0_ip_config = port_0_ip_config;
+@@ -339,6 +391,8 @@ let make
+         Data.variant = variant;
+         Data.kernel = kernel;
+         Data.show_unix_terminal = show_unix_terminal;
++        Data.time_frequency = time_frequency;
++        Data.time_convergence = time_convergence;
+         Data.old_name = old_name;
+         }
+ 
+@@ -434,6 +488,8 @@ class router
+   ?variant_realpath (* used just for creating the filesystem history device *)
+   ?kernel
+   ?(show_unix_terminal=false)
++  ?time_frequency
++  ?time_convergence
+   ?terminal
+   ~port_no
+   ()
+@@ -464,7 +520,7 @@ class router
+ 
+   inherit User_level.virtual_machine_with_history_and_ifconfig
+     ~network:network_alias
+-    ?epithet ?variant ?kernel ?terminal
++    ?epithet ?variant ?kernel ?terminal ?time_frequency ?time_convergence
+     ~history_icon:"router"
+     ~ifconfig_device_type:"router"
+     ~ifconfig_port_row_completions
+@@ -497,11 +553,14 @@ class router
+     let cow_file_name = self#create_cow_file_name in
+     let () =
+      Log.printf
+-       "About to start the router %s\n  with filesystem: %s\n  cow file: %s\n  kernel: %s\n"
++       "About to start the router %s\n  with filesystem: %s\n  cow file: %s\n
++       kernel: %s\n freq: %s conv: %s\n"
+        self#name
+        self#get_filesystem_file_name
+        cow_file_name
+        self#get_kernel_file_name
++       time_frequency
++       time_convergence
+     in
+     new Simulation_level.router
+       ~parent:self
+@@ -512,6 +571,8 @@ class router
+       ~umid:self#get_name
+       ~id
+       ~show_unix_terminal:self#get_show_unix_terminal
++      ~time_frequency
++      ~time_convergence
+       ~unexpected_death_callback:self#destroy_because_of_unexpected_death
+       ()
+ 
+@@ -554,6 +615,8 @@ class router
+                    ("variant"  ,  self#get_variant_as_string);
+                    ("kernel"   ,  self#get_kernel   );
+                    ("show_unix_terminal" , string_of_bool (self#get_show_unix_terminal));
++                   ("time_frequency", self#get_time_frequency);
++                   ("time_convergence", self#get_time_convergence);
+                    ("terminal" ,  self#get_terminal );
+                    ("port_no"  ,  (string_of_int self#get_port_no))  ;
+ 	           ])
+@@ -569,6 +632,8 @@ class router
+   | ("show_unix_terminal", x ) -> self#set_show_unix_terminal (bool_of_string x)
+   | ("terminal" , x ) -> self#set_terminal x
+   | ("port_no"  , x ) -> self#set_port_no  (int_of_string x)
++  | ("time_frequency", x) -> self#set_time_frequency x
++  | ("time_convergence", x) -> self#set_time_convergence x
+   | _ -> () (* Forward-comp. *)
+ 
+  method private get_assoc_list_from_ifconfig ~key =
+@@ -611,9 +676,11 @@ class router
+    self#set_port_0_ipv4_address ipv4;
+    self#set_port_0_ipv4_netmask_by_cidr cidr;
+ 
+- method update_router_with ~name ~label ~port_0_ip_config ~port_no ~kernel ~show_unix_terminal =
++ method update_router_with ~name ~label ~port_0_ip_config ~port_no ~kernel
++ ~show_unix_terminal ~time_frequency ~time_convergence=
+    (* first action: *)
+-   self_as_virtual_machine_with_history_and_ifconfig#update_virtual_machine_with ~name ~port_no kernel;
++   self_as_virtual_machine_with_history_and_ifconfig#update_virtual_machine_with
++   ~name ~port_no ~time_frequency ~time_convergence kernel;
+    (* then we can set the object property "name" (read by #get_name): *)
+    self_as_node_with_ledgrid_and_defects#update_with ~name ~label ~port_no;
+    self#set_port_0_ip_config port_0_ip_config;
+@@ -638,6 +705,8 @@ class ['parent] router =
+       ?umid
+       ~id
+       ~show_unix_terminal
++      ~time_frequency
++      ~time_convergence
+       ~unexpected_death_callback
+       () ->
+ object(self)
+@@ -655,6 +724,8 @@ object(self)
+       ~id
+       ~show_unix_terminal
+       ~xnest:false
++      ~time_frequency
++      ~time_convergence
+       ~unexpected_death_callback
+       ()
+       as super
+diff -uprN -x ''\''*~'\''' -x '*.swp' -x gui.xml marionnet-0.90.6-original/simulation_level.ml marionnet-0.90.6-relat/simulation_level.ml
+--- marionnet-0.90.6-original/simulation_level.ml	2011-02-02 19:27:01.000000000 +0100
++++ marionnet-0.90.6-relat/simulation_level.ml	2014-09-09 19:53:30.741896080 +0200
+@@ -819,6 +819,8 @@ class uml_process =
+       ~(console)
+       ?umid:(umid="uml-" ^ (string_of_int (gensym ())))
+       ~id
++      ?(time_frequency="1.0")
++      ?(time_convergence="0")
+       ?(show_unix_terminal=false)
+       ?xnest_display_number
+       ~unexpected_death_callback
+@@ -871,6 +873,8 @@ class uml_process =
+        "hostfs="^hostfs_pathname;
+        "hostname="^umid;
+        "xterm="^Initialization.marionnet_terminal;
++       "timefreq="^time_frequency;
++       "timeconv="^time_convergence;
+        (* Ghost interface configuration. The IP address is relative to a *host* tap: *)
+        "eth42=tuntap,"^tap_name^","^(random_ghost_mac_address ())^",172.23.0.254";
+      ] in
+@@ -891,11 +895,14 @@ class uml_process =
+         command_line_arguments
+     | Some keyboard_layout ->
+         ("keyboard_layout="^keyboard_layout) :: command_line_arguments in
++  (* Modified to get compatibility with newer filesystems and kernels,
++   * but old ones do not work with this. A better workaround is found in
++   * more recent versions.*)
+   let command_line_arguments =
+     command_line_arguments @
+-    ["con0=none"; "con1=none"; "con2=none"; "con3=none"; "con4=none"; "con5=none"; "con6=none";
++    ["con0="^console; "con1=none"; "con2=none"; "con3=none"; "con4=none"; "con5=none"; "con6=none";
+      "ssl0="^console; "ssl1=none"; "ssl2=none"; "ssl3=none"; "ssl4=none"; "ssl5=none"; "ssl6=none";
+-     "console=ttyS0"] in
++     "console=tty0"] in
+ object(self)
+   inherit process
+       kernel_file_name
+@@ -1469,6 +1476,8 @@ class virtual ['parent] machine_or_route
+       ~xnest
+       ?umid:(umid="uml-" ^ (string_of_int (gensym ())))
+       ~id
++      ?time_frequency
++      ?time_convergence
+       ?show_unix_terminal
+       ~unexpected_death_callback
+       () ->
+@@ -1535,6 +1544,8 @@ object(self)
+               ~umid
+               ~console
+               ~id
++              ?time_frequency
++              ?time_convergence
+               ?show_unix_terminal
+               ?xnest_display_number:(
+                  if xnest then Some self#get_xnest_process#display_number_as_server
+diff -uprN -x ''\''*~'\''' -x '*.swp' -x gui.xml marionnet-0.90.6-original/simulation_level.mli marionnet-0.90.6-relat/simulation_level.mli
+--- marionnet-0.90.6-original/simulation_level.mli	2010-12-03 12:16:05.000000000 +0100
++++ marionnet-0.90.6-relat/simulation_level.mli	2014-08-07 23:14:40.177211105 +0200
+@@ -290,6 +290,8 @@ class uml_process :
+   console:string ->
+   ?umid:string ->
+   id:int ->
++  ?time_frequency:string ->
++  ?time_convergence:string ->
+   ?show_unix_terminal:bool ->
+   ?xnest_display_number:string ->
+   unexpected_death_callback:(int -> process_name -> unit) ->
+@@ -446,6 +448,8 @@ class virtual ['parent] machine_or_route
+   xnest:bool ->
+   ?umid:string ->
+   id:int ->
++  ?time_frequency:string ->
++  ?time_convergence:string ->
+   ?show_unix_terminal:bool ->
+   unexpected_death_callback:(unit -> unit) ->
+   unit ->
+diff -uprN -x ''\''*~'\''' -x '*.swp' -x gui.xml marionnet-0.90.6-original/user_level.ml marionnet-0.90.6-relat/user_level.ml
+--- marionnet-0.90.6-original/user_level.ml	2010-12-03 12:16:05.000000000 +0100
++++ marionnet-0.90.6-relat/user_level.ml	2014-08-09 19:05:37.279488085 +0200
+@@ -1166,6 +1166,8 @@ class virtual virtual_machine_with_histo
+   ?epithet   (* Ex: "debian-lenny-42178" *)
+   ?variant
+   ?kernel    (* Also en epithet, ex: "2.6.18-ghost" *)
++  ?time_frequency
++  ?time_convergence
+   ?terminal
+   ~(history_icon:string)
+   ~(ifconfig_device_type:string)
+@@ -1181,6 +1183,14 @@ class virtual virtual_machine_with_histo
+    | Some x -> x
+    | None   -> Option.extract vm_installations#kernels#get_default_epithet
+   in
++  let time_frequency = match time_frequency with
++   | Some x -> x
++   | None   -> "1.0"
++  in
++  let time_convergence = match time_convergence with
++   | Some x -> x
++   | None   -> "0"
++  in
+   let terminal = match terminal with
+    | Some x -> x
+    | None   -> (vm_installations#terminal_manager_of epithet)#get_default
+@@ -1242,6 +1252,24 @@ class virtual virtual_machine_with_histo
+     | true -> x
+     | false -> self#failwith "unknown kernel %s" x
+ 
++(** A machine can have an associate relative virtual time, defined by frequency and
++ * convergence. **)
++    val mutable time_frequency : string = time_frequency
++    initializer ignore (self#check_frequency time_frequency)
++    method get_time_frequency = time_frequency
++    method set_time_frequency x = time_frequency <- self#check_frequency x
++    method private check_frequency x =
++        try (if (float_of_string x = 0.) then "1.0" else x) 
++        with Failure "float_of_string" -> "1.0"
++
++    val mutable time_convergence : string = time_convergence
++    initializer ignore (self#check_convergence time_convergence)
++    method get_time_convergence = time_convergence
++    method set_time_convergence x = time_convergence <- self#check_convergence x
++    method private check_convergence x =
++        try (ignore(int_of_string x); x)
++        with Failure "int_of_string" -> "0"
++
+   (** A machine can be used accessed in a specific terminal mode. *)
+   val mutable terminal : string = terminal
+   initializer ignore (self#check_terminal terminal)
+@@ -1305,10 +1333,13 @@ class virtual virtual_machine_with_histo
+     Log.printf "component \"%s\": destroying my history.\n" self#get_name;
+     network#history#remove_device_tree self#get_name;
+ 
+-  method update_virtual_machine_with ~name ~port_no kernel =
++  method update_virtual_machine_with ~name ~port_no ~time_frequency
++  ~time_convergence kernel =
+     network#ifconfig#update_port_no self#get_name port_no;
+     network#ifconfig#rename self#get_name name;
+     network#history#rename  self#get_name name;
++    self#set_time_frequency time_frequency;
++    self#set_time_convergence time_convergence;
+     self#set_kernel kernel;
+ 
+   method create_cow_file_name =
